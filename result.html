@@ -1,100 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Result | Pairahat High School</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Result | Pairahat High School</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <header>
-    <div class="container">
-        <h1>Pairahat High School</h1>
-        <p>Result Publication System</p>
-    </div>
+  <div class="container">
+    <h1>Pairahat High School</h1>
+    <p>Result Publication System</p>
+  </div>
 </header>
 
 <nav>
-    <div class="container">
-        <a href="index.html">Home</a>
-        <a href="result.html">Result</a>
-    </div>
+  <div class="container">
+    <a href="index.html">Home</a>
+    <a href="result.html">Result</a>
+    <a href="admin.html" class="secondary-btn">Admin</a>
+  </div>
 </nav>
 
 <main>
-<section class="section">
-<div class="container card">
+  <section class="section">
+    <div class="container card">
+      <h2>Check Your Result</h2>
 
-    <h2>Check Your Result</h2>
-
-    <div class="form-group">
+      <div class="form-group">
         <label>Class</label>
-        <select id="class">
-            <option value="">Select Class</option>
-            <option value="6">Class 6</option>
-            <option value="7">Class 7</option>
-            <option value="8">Class 8</option>
-            <option value="9">Class 9</option>
-            <option value="10">Class 10</option>
+        <select id="cls" required>
+          <option value="">Select</option>
+          <option value="6">Class 6</option>
+          <option value="7">Class 7</option>
+          <option value="8">Class 8</option>
+          <option value="9">Class 9</option>
+          <option value="10">Class 10</option>
         </select>
+      </div>
+
+      <div class="form-group">
+        <label>Roll</label>
+        <input type="text" id="roll" placeholder="Enter Roll Number" required />
+      </div>
+
+      <button class="login-btn" id="searchBtn">Search Result</button>
+
+      <div id="resultBox" style="margin-top:16px;"></div>
     </div>
-
-    <div class="form-group">
-        <label>Roll Number</label>
-        <input type="text" id="roll" placeholder="Enter Roll Number">
-    </div>
-
-    <button class="login-btn" onclick="checkResult()">Search Result</button>
-
-    <div id="resultBox" style="margin-top:20px;"></div>
-
-</div>
-</section>
+  </section>
 </main>
 
 <footer>
-    <div class="container">
-        <p>© 2026 Pairahat High School</p>
-    </div>
+  <div class="container">
+    <p>© 2026 Pairahat High School</p>
+  </div>
 </footer>
 
-<script>
-const results = [
-    {class: "6", roll: "101", name: "Rahim", gpa: "5.00"},
-    {class: "7", roll: "102", name: "Karim", gpa: "4.75"},
-    {class: "8", roll: "103", name: "Jannat", gpa: "5.00"},
-    {class: "9", roll: "104", name: "Sakib", gpa: "4.50"},
-    {class: "10", roll: "105", name: "Mim", gpa: "5.00"}
-];
+<script type="module">
+  import { db } from "./firebase.js";
+  import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-function checkResult() {
-    const selectedClass = document.getElementById("class").value;
-    const roll = document.getElementById("roll").value;
-    const resultBox = document.getElementById("resultBox");
+  const clsEl = document.getElementById("cls");
+  const rollEl = document.getElementById("roll");
+  const resultBox = document.getElementById("resultBox");
+  const btn = document.getElementById("searchBtn");
 
-    const student = results.find(
-        r => r.class === selectedClass && r.roll === roll
-    );
+  btn.addEventListener("click", async () => {
+    const cls = clsEl.value.trim();
+    const roll = rollEl.value.trim();
 
-    if(student){
-        resultBox.innerHTML = `
-            <div class="card">
-                <h3>Result Found</h3>
-                <p><strong>Name:</strong> ${student.name}</p>
-                <p><strong>Class:</strong> ${student.class}</p>
-                <p><strong>Roll:</strong> ${student.roll}</p>
-                <p><strong>GPA:</strong> ${student.gpa}</p>
-            </div>
-        `;
-    } else {
-        resultBox.innerHTML = `
-            <div style="color:red; font-weight:bold;">
-                Result Not Found!
-            </div>
-        `;
+    if(!cls || !roll){
+      resultBox.innerHTML = `<p style="color:red;font-weight:800;">Please select class and enter roll.</p>`;
+      return;
     }
-}
+
+    const id = `${cls}_${roll}`;
+    const ref = doc(db, "results", id);
+    const snap = await getDoc(ref);
+
+    if(snap.exists()){
+      const s = snap.data();
+      resultBox.innerHTML = `
+        <div class="card">
+          <h3>✅ Result Found</h3>
+          <p><b>Name:</b> ${s.name}</p>
+          <p><b>Class:</b> ${s.class}</p>
+          <p><b>Roll:</b> ${s.roll}</p>
+          <p><b>GPA:</b> ${s.gpa}</p>
+        </div>
+      `;
+    } else {
+      resultBox.innerHTML = `
+        <p style="color:red;font-weight:800;">❌ Result Not Found!</p>
+        <p>Check class and roll again.</p>
+      `;
+    }
+  });
 </script>
 
 </body>
