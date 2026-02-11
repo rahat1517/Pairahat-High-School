@@ -4,47 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pairahat High School</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>Pairahat High School</div>
-    <div>পায়রাহাট মাধ্যমিক বিদ্যালয়</div>
 
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>Pairahat High School</h1>
+            <p>পায়রাহাট মাধ্যমিক বিদ্যালয়</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
     <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="">Academics</a>
-        <a href="">Students</a>
-        <a href="">Contact</a>
-        <a href="signUp.html">Registration</a>
-        <a href="login.html">Login</a>
-        
+        <div class="container">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="academics.html">Academics</a>
+            <a href="students.html">Students</a>
+            <a href="contact.html">Contact</a>
+            <a href="result.html">Result</a>
+
+            <a href="signUp.html" class="secondary-btn">Registration</a>
+            <a href="login.html" class="secondary-btn">Login</a>
+        </div>
     </nav>
 
-    <hr>
+    <!-- Animated Hero Section -->
+    <section class="hero-animated">
+        <div class="hero-bg"></div>
 
-    
+        <div class="container hero-content">
+            <h2 class="hero-title">Welcome To Pairahat High School</h2>
+            <p class="hero-subtitle">
+                We are committed to providing quality education and shaping the future of our students.
+            </p>
 
-    <h3>Academics</h3>
-    <p>
-        The school offers classes from Grade 6 to Grade 10 under the national curriculum.
-        Various subjects including Science, Arts, and Commerce are taught by experienced teachers.
-    </p>
-    <hr>
+            <div class="home-actions">
+                <a href="signUp.html" class="login-btn hero-btn">Apply / Registration</a>
+                <a href="login.html" class="secondary-btn hero-btn">Student Login</a>
+            </div>
+        </div>
+    </section>
 
-    <h3>Administration</h3>
-    <p>
-        The administration office manages student records, academic planning,
-        and overall school operations.
-    </p>
+        <!-- Notice Ticker -->
+<section class="notice-ticker">
+  <div class="container notice-wrap">
+    <span class="notice-badge">Latest Notice</span>
 
-    <h3>Students</h3>
-    <p>
-        Students actively participate in sports, cultural programs, and academic competitions.
-    </p>
-    <br>
-      
+    <div class="ticker">
+      <div class="ticker-track">
+        <span>📢 Admission open for 2026 session</span>
+        <span>📅 Annual Sports Day on 15th March</span>
+        <span>📝 SSC Model Test Exam starts next week</span>
+        <span>🏆 Science Fair Registration is ongoing</span>
 
-    <a href="signUp.html"><button >Registration</button></a>
-    <a href="login.html"><button>Login</button></a>
+        <!-- repeat for smooth loop -->
+        <span>📢 Admission open for 2026 session</span>
+        <span>📅 Annual Sports Day on 15th March</span>
+        <span>📝 SSC Model Test Exam starts next week</span>
+        <span>🏆 Science Fair Registration is ongoing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 Pairahat High School</p>
+        </div>
+    </footer>
+
 </body>
 </html>
