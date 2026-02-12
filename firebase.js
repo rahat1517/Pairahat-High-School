@@ -4,8 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCz79R-4Kvo5ImobTbda27K4YRpaMlxtuc",
+const firebaseConfig = mobTbda27K
   authDomain: "public-result-system.firebaseapp.com",
   projectId: "public-result-system",
   storageBucket: "public-result-system.appspot.com",
