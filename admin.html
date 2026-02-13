@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin | Pairahat High School</title>
+  <title>Admin | Pairahat Secondary School</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <header>
   <div class="container">
-    <h1>Pairahat High School</h1>
+    <h1>Pairahat Secondary School</h1>
     <p>Admin Panel - Result Management</p>
   </div>
 </header>
@@ -96,7 +96,7 @@
 
 <footer>
   <div class="container">
-    <p>© 2026 Pairahat High School</p>
+    <p>© 2026 Pairahat Secondary School</p>
   </div>
 </footer>
 
@@ -156,7 +156,7 @@
       adminPanel.style.display = "block";
       logoutBtn.style.display = "inline-block";
       loginBtn.style.display = "none";
-      setAuthMsg(`✅ Admin: ${user.email}`);
+      setAuthMsg(` Admin: ${user.email}`);
     } else {
       adminPanel.style.display = "none";
       logoutBtn.style.display = "none";
@@ -188,14 +188,14 @@
     const c = cls.value.trim();
     const r = roll.value.trim();
     if(!c || !r){
-      setMsg("❌ Enter Class and Roll to delete.", false);
+      setMsg(" Enter Class and Roll to delete.", false);
       return;
     }
     const id = `${c}_${r}`;
     const ref = doc(db, "results", id);
     const snap = await getDoc(ref);
     if(!snap.exists()){
-      setMsg("❌ Result not found.", false);
+      setMsg(" Result not found.", false);
       return;
     }
     await deleteDoc(ref);
