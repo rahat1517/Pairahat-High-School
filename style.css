@@ -17,6 +17,7 @@ body{
 .container{
   width: min(92%, 1100px);
   margin: auto;
+  
 }
 
 /* Default spacing for page content */
@@ -28,13 +29,43 @@ main{
 .section{
   padding: 28px 0;
 }
+.contact-info{
+  font-size: 18px;
+  font-weight: bold;
+}
 
+.dropdown{
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown-content{
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  border-radius: 4px;
+  z-index: 1;
+  border-shadow:0px 8px 16px 0px rgba(0,0,0,0.2)
+}
+
+.dropdown-content a{
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown:hover .dropdown-content{
+  display: block;
+}
 /* =========================
    HEADER
 ========================= */
 header{
-  background: linear-gradient(90deg, #003366, #0055aa);
-  color: white;
+  background: white;
+  color:rgb(73, 50, 205);
   padding: 22px 0;
   text-align: center;
 }
@@ -42,6 +73,13 @@ header{
 header h1{
   font-size: 28px;
   letter-spacing: 0.3px;
+}
+.school-name{
+  color:rgb(165, 77, 42);
+}
+.bn-scl-name{
+  color: blue;
+  font-size: 20px;
 }
 
 header p{
@@ -107,12 +145,21 @@ footer p{
 h2{
   font-size: 24px;
   margin-bottom: 10px;
+  
+}
+
+.centered-header{
+  text-align: center;
+  width: fit-content;
+  margin: 0 auto;
+  border-bottom: 4px solid #ff8533cc;
 }
 
 h3{
   font-size: 18px;
   margin-top: 14px;
   margin-bottom: 8px;
+  
 }
 
 p{
@@ -554,7 +601,7 @@ p{
   animation-play-state: paused;
 }
 
-/* ✅ Pause when focused (keyboard accessibility) */
+/*  Pause when focused (keyboard accessibility) */
 .ticker:focus-within .ticker-track{
   animation-play-state: paused;
 }
