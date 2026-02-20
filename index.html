@@ -1,124 +1,1200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pairahat Secondary School</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pairahat Secondary School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ============================================================
+       TOKENS
+    ============================================================ */
+    :root {
+      --navy:    #0a1f44;
+      --blue:    #1152a3;
+      --sky:     #2b7fe5;
+      --gold:    #e8a020;
+      --gold-lt: #ffd07a;
+      --cream:   #f8f5ef;
+      --white:   #ffffff;
+      --text:    #1a2340;
+      --muted:   #5a6480;
+      --border:  rgba(17,82,163,0.12);
+
+      --r: 14px;
+      --r-lg: 22px;
+      --ease: cubic-bezier(.22,.8,.2,1);
+
+      --shadow-sm: 0 6px 20px rgba(10,31,68,.10);
+      --shadow-md: 0 16px 48px rgba(10,31,68,.16);
+      --shadow-lg: 0 28px 70px rgba(10,31,68,.22);
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    p  { margin-bottom: 10px; }
+
+    :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+    .container {
+      width: min(94%, 1140px);
+      margin: auto;
+    }
+
+    /* ============================================================
+       NOTICE TICKER (Done)
+    ============================================================ */
+    .ticker-bar {
+      background: var(--navy);
+      padding: 9px 0;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .ticker-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    .ticker-label {
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .ticker-scroll {
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      gap: 44px;
+      white-space: nowrap;
+      animation: tickerMove 22s linear infinite;
+    }
+
+    .ticker-bar:hover .ticker-track,
+    .ticker-bar:focus-within .ticker-track {
+      animation-play-state: paused;
+    }
+
+    .ticker-track span {
+      color: var(--gold-lt);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .02em;
+    }
+
+    @keyframes tickerMove {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ============================================================
+       HEADER (done)
+    ============================================================ */
+    header {
+      background: var(--navy);
+      padding: 22px 0 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 120% at 10% 50%, rgba(43,127,229,.22) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 90%  at 90% 50%, rgba(232,160,32,.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .header-emblem {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--gold), #c47a10);
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(232,160,32,.4);
+      border: 3px solid rgba(255,255,255,.15);
+    }
+
+    .header-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(18px, 2.6vw, 26px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.15;
+      letter-spacing: -.01em;
+    }
+
+    .header-text .bn {
+      font-size: 14px;
+      color: var(--gold-lt);
+      margin-top: 3px;
+      opacity: .9;
+      font-weight: 500;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 8px;
+    }
+
+    .lang-switch a {
+      color: rgba(255,255,255,.7);
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,.2);
+      padding: 5px 14px;
+      border-radius: 999px;
+      transition: all .2s;
+    }
+
+    .lang-switch a:hover {
+      background: rgba(255,255,255,.12);
+      color: var(--white);
+    }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    nav {
+      background: var(--blue);
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      box-shadow: 0 4px 20px rgba(10,31,68,.3);
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2px;
+      padding: 6px 0;
+    }
+
+    nav > .container > a,
+    .dropdown > a {
+      color: rgba(255,255,255,.88);
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 9px 13px;
+      border-radius: 8px;
+      transition: background .18s, color .18s, transform .18s;
+      letter-spacing: .01em;
+      white-space: nowrap;
+    }
+
+    nav > .container > a:hover,
+    .dropdown > a:hover,
+    .dropdown:hover > a {
+      background: rgba(255,255,255,.14);
+      color: var(--white);
+    }
+
+    /* Dropdown */
+    .dropdown { position: relative; }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      min-width: 200px;
+      background: var(--white);
+      border-radius: var(--r);
+      box-shadow: var(--shadow-md);
+      border: var(--border);
+      overflow: hidden;
+      transform: translateY(8px);
+      opacity: 0;
+      transition: transform .2s var(--ease), opacity .2s var(--ease);
+    }
+
+    .dropdown-content a {
+      display: block;
+      color: var(--text);
+      padding: 11px 16px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(0,0,0,.04);
+      transition: background .15s, padding-left .15s;
+    }
+
+    .dropdown-content a:last-child { border-bottom: none; }
+
+    .dropdown-content a:hover {
+      background: #eef4ff;
+      padding-left: 22px;
+      color: var(--blue);
+    }
+
+    .dropdown:hover .dropdown-content,
+    .dropdown:focus-within .dropdown-content {
+      display: block;
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Nav special buttons */
+    .nav-btn {
+      background: var(--gold) !important;
+      color: var(--navy) !important;
+      font-weight: 700 !important;
+      padding: 8px 14px !important;
+      border-radius: 8px !important;
+      transition: filter .2s, transform .18s !important;
+    }
+
+    .nav-btn:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px) !important;
+      background: var(--gold) !important;
+    }
+
+    .nav-btn.outline {
+      background: transparent !important;
+      border: 2px solid var(--gold) !important;
+      color: var(--gold) !important;
+    }
+
+    .nav-btn.outline:hover {
+      background: rgba(232,160,32,.15) !important;
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, #061530 0%, #0a2d6b 40%, #0e4098 70%, #103080 100%);
+      z-index: 0;
+    }
+
+    /* Animated circles */
+    .hero-bg::before,
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(43,127,229,.18);
+      filter: blur(0);
+    }
+
+    .hero-bg::before {
+      width: 600px; height: 600px;
+      top: -200px; left: -150px;
+      animation: floatBlob 12s ease-in-out infinite;
+    }
+
+    .hero-bg::after {
+      width: 450px; height: 450px;
+      bottom: -180px; right: -100px;
+      background: rgba(232,160,32,.12);
+      animation: floatBlob 15s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatBlob {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      50%       { transform: translate(30px,20px) scale(1.07); }
+    }
+
+    /* Decorative grid pattern */
+    .hero-bg .grid-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 80px 0;
+      color: var(--white);
+      max-width: 660px;
+      animation: fadeUp .9s var(--ease) both;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(232,160,32,.2);
+      border: 1px solid rgba(232,160,32,.4);
+      color: var(--gold-lt);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block; }
+
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      line-height: 1.12;
+      margin-bottom: 18px;
+      letter-spacing: -.02em;
+    }
+
+    .hero h2 em {
+      font-style: normal;
+      color: var(--gold-lt);
+    }
+
+    .hero p {
+      font-size: 17px;
+      opacity: .88;
+      max-width: 520px;
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 26px;
+      border-radius: var(--r);
+      border: none;
+      cursor: pointer;
+      transition: filter .2s, transform .2s, box-shadow .2s;
+      box-shadow: 0 6px 22px rgba(232,160,32,.4);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.06);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(232,160,32,.5);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 26px;
+      border-radius: var(--r);
+      border: 2px solid rgba(255,255,255,.35);
+      cursor: pointer;
+      transition: background .2s, border-color .2s, transform .2s;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,.1);
+      border-color: rgba(255,255,255,.6);
+      transform: translateY(-2px);
+    }
+
+    /* Hero floating card */
+    .hero-card {
+      position: absolute;
+      right: 0;
+      bottom: -30px;
+      z-index: 1;
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: var(--r-lg);
+      padding: 24px 28px;
+      color: white;
+      max-width: 300px;
+      animation: fadeUp 1.1s var(--ease) .2s both;
+    }
+
+    @media (max-width: 900px) { .hero-card { display: none; } }
+
+    .hero-card .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .hero-card .mini-stat {
+      text-align: center;
+      background: rgba(255,255,255,.08);
+      border-radius: 10px;
+      padding: 12px 8px;
+    }
+
+    .hero-card .mini-stat strong {
+      display: block;
+      font-size: 22px;
+      font-family: 'Playfair Display', serif;
+      color: var(--gold-lt);
+    }
+
+    .hero-card .mini-stat span {
+      font-size: 11px;
+      opacity: .7;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       SECTION BASE
+    ============================================================ */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section.alt {
+      background: #eef3fb;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-head .overline {
+      display: inline-block;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .section-head h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 900;
+      color: var(--navy);
+      margin: 0 0 10px;
+      letter-spacing: -.015em;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* ============================================================
+       ABOUT SECTION
+    ============================================================ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-text {
+      padding: 34px;
+      background: var(--white);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-sm);
+      border: var(--border);
+    }
+
+    .about-text h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--navy);
+      margin: 0 0 14px;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .about-text .read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 14px;
+      margin-top: 6px;
+      transition: gap .2s;
+    }
+
+    .about-text .read-more:hover { gap: 10px; }
+
+    .values-card {
+      padding: 34px;
+      background: var(--navy);
+      border-radius: var(--r-lg);
+      color: white;
+      box-shadow: var(--shadow-md);
+    }
+
+    .values-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--gold-lt);
+      margin: 0 0 18px;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      font-size: 15px;
+      color: rgba(255,255,255,.88);
+      font-weight: 500;
+    }
+
+    .value-item:last-child { border-bottom: none; }
+
+    .value-icon {
+      width: 34px; height: 34px;
+      background: rgba(232,160,32,.18);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       WHY CHOOSE US
+    ============================================================ */
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    @media (max-width: 900px) { .cards-3 { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .cards-3 { grid-template-columns: 1fr; } }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--r-lg);
+      padding: 30px 26px;
+      box-shadow: var(--shadow-sm);
+      border: var(--border);
+      transition: transform .28s var(--ease), box-shadow .28s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+      transform: scaleX(0);
+      transition: transform .28s var(--ease);
+      transform-origin: left;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-card:hover::before { transform: scaleX(1); }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .feature-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: var(--navy);
+      margin: 0 0 10px;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       STATS
+    ============================================================ */
+    .stats-section {
+      background: var(--navy);
+      padding: 70px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 420px) { .stats-grid { grid-template-columns: 1fr; } }
+
+    .stat-box {
+      text-align: center;
+      padding: 36px 20px;
+      position: relative;
+    }
+
+    .stat-box::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 20%; bottom: 20%;
+      width: 1px;
+      background: rgba(255,255,255,.1);
+    }
+
+    .stat-box:last-child::after { display: none; }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--gold-lt);
+      display: block;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      color: rgba(255,255,255,.65);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       HEADMASTER MESSAGE
+    ============================================================ */
+    .message-card {
+      background: var(--white);
+      border-radius: var(--r-lg);
+      padding: 48px;
+      box-shadow: var(--shadow-md);
+      border: var(--border);
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+
+    .message-card::before {
+      content: '"';
+      font-family: 'Playfair Display', serif;
+      font-size: 120px;
+      color: var(--blue);
+      opacity: .08;
+      position: absolute;
+      top: -10px;
+      left: 30px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .message-card blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(17px, 2.2vw, 22px);
+      color: var(--navy);
+      line-height: 1.6;
+      font-style: italic;
+      margin: 0 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .message-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .message-avatar {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--navy));
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .message-footer-text strong {
+      display: block;
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 15px;
+    }
+
+    .message-footer-text span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .read-full {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 14px;
+      border-bottom: 1px solid transparent;
+      transition: border-color .2s, gap .2s;
+    }
+
+    .read-full:hover { border-color: var(--blue); gap: 10px; }
+
+    /* ============================================================
+       GALLERY PREVIEW
+    ============================================================ */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .gallery-ph {
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #dbeaff, #c5d8f8);
+      border-radius: var(--r);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: var(--blue);
+      font-size: 14px;
+      border: 2px dashed rgba(17,82,163,.25);
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+      cursor: pointer;
+    }
+
+    .gallery-ph:hover {
+      transform: scale(1.03);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .gallery-cta {
+      text-align: center;
+      margin-top: 28px;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,.7);
+      text-align: center;
+      padding: 22px 0;
+      border-top: 2px solid var(--gold);
+    }
+
+    footer p {
+      font-size: 13.5px;
+      margin: 0;
+      letter-spacing: .01em;
+    }
+
+    footer strong {
+      color: var(--gold-lt);
+    }
+
+    /* ============================================================
+       ACCESSIBILITY
+    ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Notice Ticker -->
-<section class="notice-ticker">
-  <div class="container notice-wrap">
-    <span class="notice-badge">Latest Notice</span>
 
-    <div class="ticker">
-      <div class="ticker-track">
-        <span>📢 Admission open for 2026 session</span>
-        <span>📅 Annual Sports Day on 15th March</span>
-        <span>📝 SSC Model Test Exam starts next week</span>
-        <span>🏆 Science Fair Registration is ongoing</span>
-
-        <!-- repeat for smooth loop -->
-        <span>📢 Admission open for 2026 session</span>
-        <span>📅 Annual Sports Day on 15th March</span>
-        <span>📝 SSC Model Test Exam starts next week</span>
-        <span>🏆 Science Fair Registration is ongoing</span>
+  <!-- ======================================================
+       NOTICE TICKER
+  ====================================================== -->
+  <div class="ticker-bar">
+    <div class="container ticker-wrap">
+      <span class="ticker-label">📢 Latest Notice</span>
+      <div class="ticker-scroll">
+        <div class="ticker-track">
+          <span>📢 Admission open for 2026 session</span>
+          <span>📅 Annual Sports Day on 15th March</span>
+          <span>📝 SSC Model Test Exam starts next week</span>
+          <span>🏆 Science Fair Registration is ongoing</span>
+          <!-- Repeated for seamless loop -->
+          <span>📢 Admission open for 2026 session</span>
+          <span>📅 Annual Sports Day on 15th March</span>
+          <span>📝 SSC Model Test Exam starts next week</span>
+          <span>🏆 Science Fair Registration is ongoing</span>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <h1 class="school-name">Pairahat Secondary School</h1>
-            <p class="bn-scl-name">পায়রাহাট মাধ্যমিক বিদ্যালয়</p>
+  <!-- ======================================================
+       HEADER
+  ====================================================== -->
+  <header>
+    <div class="container header-inner">
+      <div class="header-brand">
+        <div class="header-emblem">🎓</div>
+        <div class="header-text">
+          <h1>Pairahat Secondary School</h1>
+          <p class="bn">পায়রাহাট মাধ্যমিক বিদ্যালয় — Somospur, Abhaynagar, Jessore</p>
+        </div>
+      </div>
+      <nav class="lang-switch" aria-label="Language switcher">
+        <a href="#">English</a>
+        <a href="#">বাংলা</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======================================================
+       NAVIGATION
+  ====================================================== -->
+  <nav aria-label="Main Navigation">
+    <div class="container">
+
+      <a href="index.html">Home</a>
+
+      <div class="dropdown">
+        <a href="about.html">About School</a>
+        <div class="dropdown-content">
+          <a href="atAglance.html">At a Glance</a>
+          <a href="history.html">History</a>
+          <a href="whyStudy.html">Why Study Here</a>
+          <a href="Insfrastructure.html">Infrastructure</a>
+          <a href="achievements.html">Achievements</a>
+          <a href="news.html">News &amp; Events</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a href="administration.html">Administration</a>
+        <div class="dropdown-content">
+          <a href="managing.html">Managing Committee</a>
+          <a href="teachers.html">Teachers &amp; Staff</a>
+          <a href="headmaster.html">Headmaster's Message</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a href="academics.html">Academics</a>
+        <div class="dropdown-content">
+          <a href="conducts.html">Code of Conduct</a>
+          <a href="guideline.html">Guideline for Parents</a>
+          <a href="dress.html">Dress Code</a>
+        </div>
+      </div>
+
+      <a href="students.html">Students</a>
+      <a href="contact.html">Contact</a>
+      <a href="#">Notices</a>
+      <a href="result.html">Result</a>
+
+      <div class="dropdown">
+        <a href="gallery.html">Gallery</a>
+        <div class="dropdown-content">
+          <a href="photos.html">Photos</a>
+          <a href="videos.html">Videos</a>
+        </div>
+      </div>
+
+      <a href="signUp.html" class="nav-btn">Register</a>
+      <a href="login.html"  class="nav-btn outline">Login</a>
+
+    </div>
+  </nav>
+
+  <!-- ======================================================
+       HERO
+  ====================================================== -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="grid-pattern"></div>
+    </div>
+
+    <div class="container" style="position:relative; z-index:1;">
+      <div class="hero-content">
+        <div class="hero-badge"><span></span> Since 1949 · EIIN: 115477</div>
+
+        <h2>Welcome to<br><em>Pairahat Secondary</em><br>School</h2>
+
+        <p>Committed to academic excellence, discipline, and shaping responsible citizens for a brighter future in Jessore &amp; beyond.</p>
+
+        <div class="hero-actions">
+          <a href="signUp.html" class="btn-primary">Apply / Register →</a>
+          <a href="login.html"  class="btn-outline">Student Login</a>
+        </div>
+      </div>
+
+      <!-- Floating stats card -->
+      <div class="hero-card">
+        <p style="font-size:13px; opacity:.7; letter-spacing:.06em; text-transform:uppercase; font-weight:700;">School at a Glance</p>
+        <div class="stat-row">
+          <div class="mini-stat"><strong>1200+</strong><span>Students</span></div>
+          <div class="mini-stat"><strong>35+</strong><span>Teachers</span></div>
+          <div class="mini-stat"><strong>98%</strong><span>Pass Rate</span></div>
+          <div class="mini-stat"><strong>75+</strong><span>Years Legacy</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       ABOUT
+  ====================================================== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="overline">Our Story</span>
+        <h3>About Our School</h3>
+        <p>A proud institution serving the community for over seven decades with dedication and excellence.</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <h4>Who We Are</h4>
+          <p>
+            Established in <strong>1949</strong>, Pairahat Secondary School is a distinguished non-government secondary institution located in Somospur, Abhaynagar, Jessore under the Khulna Division.
+          </p>
+          <p>
+            With a proud legacy spanning over seven decades, the school has consistently upheld its commitment to academic excellence, discipline, and character building.
+          </p>
+          <p>
+            Recognized by the education board and enlisted under MPO status (EIIN: 115477), the institution continues to nurture responsible, skilled, and morally strong citizens for the future.
+          </p>
+          <a class="read-more" href="about.html">Read Full History →</a>
         </div>
 
-        <div class ="lang-switch" role="navigation">
-            <a href="#">English</a>
-            <a href="#">Bangla</a>
+        <div class="values-card">
+          <h4>Our Core Values</h4>
+          <div class="value-item"><div class="value-icon">🎯</div> Discipline &amp; Respect</div>
+          <div class="value-item"><div class="value-icon">📚</div> Quality Teaching</div>
+          <div class="value-item"><div class="value-icon">🤝</div> Safe &amp; Friendly Environment</div>
+          <div class="value-item"><div class="value-icon">⚽</div> Co-curricular Activities</div>
+          <div class="value-item"><div class="value-icon">🌟</div> Moral Character Building</div>
         </div>
-    </header>
+      </div>
+    </div>
+  </section>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <a href="index.html">Home</a>
-            <div class="dropdown">
-                <a href="about.html">About School</a>
-                <div class="dropdown-content">
-                    <a href="atAglance.html">At a Glance</a>
-                    <a href="history.html">History</a>
-                    <a href="whyStudy.html">Why Study at Pairahat High School</a>
-                    <a href="Insfrastructure.html">Insfrastructure</a>
-                    <a href="achievements.html">Achievements</a>
-                    <a href="news.html">News & Events</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="administration.html" class="dropbtn">Administration</a>
-                <div class="dropdown-content">
-                    <a href="managing.html">Managing Committee</a>
-                    <a href="teachers.html">Teacher & Staff</a>
-                    <a href="headmaster.html">Headmaster's Message</a>
-                </div>
-            </div>
+  <!-- ======================================================
+       WHY CHOOSE US
+  ====================================================== -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="overline">Why Choose Us</span>
+        <h3>What Makes Pairahat Special</h3>
+        <p>We focus on learning outcomes, discipline, and holistic student growth.</p>
+      </div>
 
-            <div class="dropdown">
-                <a href="academics.html">Academics</a>
-                <div class="dropdown-content">
-                    <a href="conducts.html">Code of Conducts</a>
-                    <a href="guideline.html">Guideline For Parents</a>
-                    <a href="dress.html">Dress Code</a>
-                </div>
-            </div>
-            
-            <a href="students.html">Students</a>
-            <a href="contact.html">Contact</a>
-            <a href="#">Notices</a>
-            <a href="result.html">Result</a>
-            <div class="dropdown">
-                <a href="gallery.html">Gallery</a>
-                <div class="dropdown-content">
-                    <a href="photos.html">Photos</a>
-                    <a href="videos.html">Videos</a>
-                </div>
-            </div>
-            
-            <a href="signUp.html" class="secondary-btn">Registration</a>
-            <a href="login.html" class="secondary-btn">Login</a>
+      <div class="cards-3">
+        <div class="feature-card">
+          <span class="feature-icon">🎓</span>
+          <h4>Qualified Teachers</h4>
+          <p>Experienced and dedicated educators providing strong academic guidance and mentorship to every student.</p>
         </div>
-    </nav>
-
-    <!-- Animated Hero Section -->
-    <section class="hero-animated">
-        <div class="hero-bg"></div>
-
-        <div class="container hero-content">
-            <h2 class="hero-title">Welcome To Pairahat Secondary School</h2>
-            <p class="hero-subtitle">
-                We are committed to providing quality education and shaping the future of our students.
-            </p>
-
-            <div class="home-actions">
-                <a href="signUp.html" class="login-btn hero-btn">Apply / Registration</a>
-                <a href="login.html" class="secondary-btn hero-btn">Student Login</a>
-            </div>
+        <div class="feature-card">
+          <span class="feature-icon">📚</span>
+          <h4>Academic Excellence</h4>
+          <p>Regular tests, model exams, and supportive learning resources ensure students consistently perform their best.</p>
         </div>
-    </section>
-
-        
-
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>© 2026 Pairahat Secondary School | All Rights Reserved | Powered By: G. M. Rashidul Islam Rahat</p>
+        <div class="feature-card">
+          <span class="feature-icon">🏆</span>
+          <h4>Activities &amp; Awards</h4>
+          <p>Sports days, science fairs, debates, and cultural programs build well-rounded, confident students.</p>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       STATS
+  ====================================================== -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="stat-num">1200+</span>
+          <span class="stat-label">Students</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">35+</span>
+          <span class="stat-label">Teachers</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">98%</span>
+          <span class="stat-label">SSC Pass Rate</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">1949</span>
+          <span class="stat-label">Established</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       HEADMASTER MESSAGE
+  ====================================================== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="overline">Leadership</span>
+        <h3>Headmaster's Message</h3>
+        <p>A word from the school's leadership on our vision and mission.</p>
+      </div>
+
+      <div class="message-card">
+        <blockquote>
+          "Our aim is to build responsible, skilled, and morally strong students who can contribute positively to society and bring honour to their families and nation."
+        </blockquote>
+
+        <div class="message-footer">
+          <div class="message-avatar">🧑‍💼</div>
+          <div class="message-footer-text">
+            <strong>Headmaster</strong>
+            <span>Pairahat Secondary School</span>
+          </div>
+        </div>
+
+        <div>
+          <a class="read-full" href="headmaster.html">Read Full Message →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       GALLERY PREVIEW
+  ====================================================== -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="overline">Memories</span>
+        <h3>Gallery Preview</h3>
+        <p>Moments captured from our school's vibrant activities and events.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-ph">📷 Photo 1</div>
+        <div class="gallery-ph">📷 Photo 2</div>
+        <div class="gallery-ph">📷 Photo 3</div>
+        <div class="gallery-ph">📷 Photo 4</div>
+      </div>
+
+      <div class="gallery-cta">
+        <a href="gallery.html" class="btn-primary">View Full Gallery →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       FOOTER
+  ====================================================== -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Pairahat Secondary School &nbsp;|&nbsp; All Rights Reserved &nbsp;|&nbsp; Powered by: <strong>G. M. Rashidul Islam Rahat</strong></p>
+    </div>
+  </footer>
 
 </body>
 </html>
