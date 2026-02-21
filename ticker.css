@@ -1,7 +1,7 @@
 .ticker-bar {
   background: var(--navy);
   padding: 5px 0;
-  border-bottom: 2px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
 
 }
 
