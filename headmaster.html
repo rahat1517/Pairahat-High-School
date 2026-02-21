@@ -5,66 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Headmaster- Pairahat Secondary School</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ticker.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="token.css">
+    <link rel="stylesheet" href="header.css">
 </head>
 <body>
 
+    <!-- Notice Ticker -->
+    <section class="ticker-bar">
+      <div class="container ticker-wrap">
+        <span class="ticker-label">Latest Notice</span>
+        <div class="ticker-scroll">
+          <div class="ticker-track">
+            <span>📢 Admission open for 2026 session</span>
+            <span>📅 Annual Sports Day on 15th March</span>
+            <span>📝 SSC Model Test Exam starts next week</span>
+            <span>🏆 Science Fair Registration is ongoing</span>
+            <span>📢 Admission open for 2026 session</span>
+            <span>📅 Annual Sports Day on 15th March</span>
+            <span>📝 SSC Model Test Exam starts next week</span>
+            <span>🏆 Science Fair Registration is ongoing</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Header -->
     <header>
-        <div class="container">
-            <h1 class="school-name">Pairahat Secondary School</h1>
-            <p class="bn-scl-name">পায়রাহাট মাধ্যমিক বিদ্যালয়</p>
+        <div class="container header-inner">
+          <div class="header-brand">
+            <div class="header-emblem">🎓</div>
+            <div class="header-text">
+              <h1>Pairahat Secondary School</h1>
+              <p class="bn">পায়রাহাট মাধ্যমিক বিদ্যালয় — Pairahat, Abhaynagar, Jashore</p>
+              
+            </div>
+          </div>
+          <div class="lang-switch" role="navigation">
+            <a href="#">English</a>
+            <a href="#">বাংলা</a>
+          </div>
         </div>
     </header>
 
     <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <a href="index.html">Home</a>
-            <div class="dropdown">
-                <a href="about.html">About School</a>
-                <div class="dropdown-content">
-                    <a href="atAglance.html">At a Glance</a>
-                    <a href="history.html">History</a>
-                    <a href="whyStudy.html">Why Study at Pairahat High School</a>
-                    <a href="Insfrastructure.html">Insfrastructure</a>
-                    <a href="achievements.html">Achievements</a>
-                    <a href="news.html">News & Events</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="administration.html" class="dropbtn">Administration</a>
-                <div class="dropdown-content">
-                    <a href="managing.html">Managing Committee</a>
-                    <a href="teachers.html">Teacher & Staff</a>
-                    <a href="headmaster.html">Headmaster's Message</a>
-                </div>
-            </div>
+    <nav id="mainNav">
+      <div class="nav-container">
 
-            <div class="dropdown">
-                <a href="academics.html">Academics</a>
-                <div class="dropdown-content">
-                    <a href="conducts.html">Code of Conducts</a>
-                    <a href="guideline.html">Guideline For Parents</a>
-                    <a href="dress.html">Dress Code</a>
-                </div>
-            </div>
-            
-            <a href="students.html">Students</a>
-            <a href="contact.html">Contact</a>
-            <a href="#">Notices</a>
-            <a href="result.html">Result</a>
-            <div class="dropdown">
-                <a href="gallery.html">Gallery</a>
-                <div class="dropdown-content">
-                    <a href="photos.html">Photos</a>
-                    <a href="videos.html">Videos</a>
-                </div>
-            </div>
-            
-            <a href="signUp.html" class="secondary-btn">Registration</a>
-            <a href="login.html" class="secondary-btn">Login</a>
+        <ul class="nav-links">
+
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+
+          <li>
+            <a href="about.html">About School <span class="arrow">▾</span></a>
+            <ul class="dropdown">
+              <li><a href="atAglance.html">At a Glance</a></li>
+              <li><a href="history.html">History</a></li>
+              <li><a href="whyStudy.html">Why Study Here</a></li>
+              <li><a href="Insfrastructure.html">Infrastructure</a></li>
+              <li><a href="achievements.html">Achievements</a></li>
+              <li><a href="news.html">News &amp; Events</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="administration.html">Administration <span class="arrow">▾</span></a>
+            <ul class="dropdown">
+              <li><a href="managing.html">Managing Committee</a></li>
+              <li><a href="teachers.html">Teachers &amp; Staff</a></li>
+              <li><a href="headmaster.html">Headmaster's Message</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="academics.html">Academics <span class="arrow">▾</span></a>
+            <ul class="dropdown">
+              <li><a href="conducts.html">Code of Conduct</a></li>
+              <li><a href="guideline.html">Guideline for Parents</a></li>
+              <li><a href="dress.html">Dress Code</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="students.html">Students <span class="arrow">▾</span></a>
+            <ul class="dropdown">
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="#">Notices</a></li>
+              <li><a href="result.html">Result</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="gallery.html">Gallery <span class="arrow">▾</span></a>
+            <ul class="dropdown">
+              <li><a href="photos.html">Photos</a></li>
+              <li><a href="videos.html">Videos</a></li>
+            </ul>
+          </li>
+          <li><a href="notice.html">Notices</a></li>
+          <li><a href="result.html">Result</a></li>
+
+        </ul>
+
+        <!-- Auth Buttons -->
+        <div class="nav-auth">
+          <a href="login.html" class="nav-btn-outline">Login</a>
+          <a href="signUp.html" class="nav-btn-primary">Register</a>
         </div>
+
+        <!-- Hamburger -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+      </div>
+
+      <!-- Mobile Drawer -->
+      <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-inner">
+          <ul>
+            <li><a class="mob-home" href="index.html">🏠 Home</a></li>
+
+            <li class="mob-section">About School</li>
+            <li><a href="atAglance.html">At a Glance</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="whyStudy.html">Why Study Here</a></li>
+            <li><a href="Insfrastructure.html">Infrastructure</a></li>
+            <li><a href="achievements.html">Achievements</a></li>
+            <li><a href="news.html">News &amp; Events</a></li>
+
+            <li class="mob-section">Administration</li>
+            <li><a href="managing.html">Managing Committee</a></li>
+            <li><a href="teachers.html">Teachers &amp; Staff</a></li>
+            <li><a href="headmaster.html">Headmaster's Message</a></li>
+
+            <li class="mob-section">Academics</li>
+            <li><a href="conducts.html">Code of Conduct</a></li>
+            <li><a href="guideline.html">Guideline for Parents</a></li>
+            <li><a href="dress.html">Dress Code</a></li>
+
+            <li class="mob-section">Students</li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#">Notices</a></li>
+            <li><a href="result.html">Result</a></li>
+
+            <li class="mob-section">Gallery</li>
+            <li><a href="photos.html">Photos</a></li>
+            <li><a href="videos.html">Videos</a></li>
+          </ul>
+
+          <div class="mob-auth">
+            <a href="login.html" class="nav-btn-outline">Login</a>
+            <a href="signUp.html" class="nav-btn-primary">Register</a>
+          </div>
+        </div>
+      </div>
     </nav>
     <!-- Main Content -->
     <main>
