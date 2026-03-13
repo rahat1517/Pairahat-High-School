@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | পায়রাহাট মাধ্যমিক বিদ্যালয়</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #1a3a5c; --primary-dark: #0f2540; --accent: #c8a951; --success: #27ae60; --danger: #e74c3c; --warn: #f39c12; --info: #2980b9; --bg: #f0f4f8; --sidebar-w: 260px; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Hind Siliguri', sans-serif; background: var(--bg); display: flex; min-height: 100vh; font-size: 14px; }
+        a { text-decoration: none; color: inherit; }
+        
+        /* SIDEBAR */
+        .sidebar { width: var(--sidebar-w); background: var(--primary-dark); color: white; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh; z-index: 100; overflow-y: auto; }
+        .sidebar-brand { padding: 24px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-brand h2 { font-size: 15px; font-weight: 700; color: var(--accent); }
+        .sidebar-brand p { font-size: 11px; opacity: 0.6; margin-top: 3px; }
+        .user-badge { padding: 16px 20px; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .user-avatar { width: 40px; height: 40px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 8px; }
+        .user-badge .name { font-size: 13px; font-weight: 700; }
+        .user-badge .role { font-size: 11px; opacity: 0.6; }
+        .sidebar nav { padding: 12px 0; flex: 1; }
+        .nav-section { padding: 12px 20px 4px; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; opacity: 0.4; }
+        .nav-item { display: flex; align-items: center; gap: 10px; padding: 11px 20px; cursor: pointer; transition: all 0.2s; font-size: 13px; font-weight: 500; border-left: 3px solid transparent; }
+        .nav-item:hover { background: rgba(255,255,255,0.05); }
+        .nav-item.active { background: rgba(200,169,81,0.15); border-left-color: var(--accent); color: var(--accent); }
+        .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
+        .logout-btn { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.1); cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 8px; opacity: 0.7; transition: all 0.2s; }
+        .logout-btn:hover { opacity: 1; color: #e74c3c; }
+
+        /* MAIN */
+        .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; }
+        .topbar { background: white; padding: 0 28px; height: 60px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 50; }
+        .topbar h1 { font-size: 18px; font-weight: 700; color: var(--primary); }
+        .topbar-right { display: flex; align-items: center; gap: 16px; }
+        .topbar-right span { font-size: 12px; color: #888; }
+        .view-site-btn { background: var(--primary); color: white; padding: 7px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; font-family: 'Hind Siliguri', sans-serif; border: none; cursor: pointer; transition: all 0.2s; }
+        .view-site-btn:hover { background: var(--accent); color: var(--primary-dark); }
+        
+        .content { padding: 28px; flex: 1; }
+
+        /* PANELS */
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        /* STATS OVERVIEW */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 28px; }
+        .stat-card { background: white; border-radius: 12px; padding: 22px; border-left: 4px solid var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .stat-card.blue { border-left-color: var(--info); }
+        .stat-card.green { border-left-color: var(--success); }
+        .stat-card.red { border-left-color: var(--danger); }
+        .stat-card .val { font-size: 32px; font-weight: 800; color: var(--primary); font-family: 'Merriweather', serif; }
+        .stat-card .lbl { font-size: 12px; color: #888; margin-top: 4px; }
+
+        /* CARDS */
+        .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 24px; }
+        .card-header { padding: 18px 22px; border-bottom: 1px solid #f0f4f8; display: flex; align-items: center; justify-content: space-between; }
+        .card-header h3 { font-size: 15px; font-weight: 700; color: var(--primary); }
+        .card-body { padding: 22px; }
+
+        /* TABLES */
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #f8f9fb; padding: 11px 14px; text-align: left; font-size: 12px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 12px 14px; border-bottom: 1px solid #f0f4f8; font-size: 13px; }
+        tr:hover td { background: #fafbfc; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .badge-active { background: #e8fde8; color: #27ae60; }
+        .badge-inactive { background: #f0f0f0; color: #888; }
+        .badge-admin { background: rgba(200,169,81,0.2); color: #7a6020; }
+        .badge-teacher { background: rgba(26,58,92,0.1); color: var(--primary); }
+        .badge-urgent { background: #fde8e8; color: #c0392b; }
+        .badge-info { background: #e8f4fd; color: #2980b9; }
+        .badge-event { background: #e8fde8; color: #27ae60; }
+        .btn { padding: 7px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: 'Hind Siliguri', sans-serif; cursor: pointer; border: none; transition: all 0.15s; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-accent { background: var(--accent); color: #1a1a1a; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn-outline { background: transparent; border: 1.5px solid #d1d9e0; color: #555; }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-sm { padding: 5px 10px; font-size: 11px; }
+
+        /* FORMS */
+        .form-row { display: grid; gap: 16px; margin-bottom: 16px; }
+        .form-row.cols-2 { grid-template-columns: 1fr 1fr; }
+        .form-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+        .form-group label { display: block; font-size: 12px; font-weight: 700; color: #444; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-family: 'Hind Siliguri', sans-serif; outline: none; transition: all 0.2s; background: #fafbfc; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); background: white; }
+        .form-group textarea { resize: vertical; min-height: 90px; }
+        .form-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+        
+        /* NOTICE LIST ADMIN */
+        .notice-admin-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px; border: 1.5px solid #e2e8f0; border-radius: 10px; margin-bottom: 12px; background: #fafbfc; }
+        .notice-admin-item:hover { border-color: var(--primary); background: white; }
+        .notice-meta { flex: 1; }
+        .notice-meta h4 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+        .notice-meta p { font-size: 12px; color: #777; }
+        .notice-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+        /* GALLERY ADMIN */
+        .gallery-admin-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .gallery-admin-item { position: relative; border-radius: 10px; overflow: hidden; }
+        .gallery-admin-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+        .gallery-admin-item .g-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; gap: 6px; align-items: center; justify-content: center; opacity: 0; transition: all 0.2s; }
+        .gallery-admin-item:hover .g-overlay { opacity: 1; }
+        .gallery-admin-item .g-caption { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; font-size: 11px; padding: 6px 8px; }
+
+        /* TEACHER ACCESS TABLE */
+        .access-grid { display: grid; gap: 12px; }
+        .teacher-row { background: white; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
+        .teacher-row:hover { border-color: var(--primary); }
+        .teacher-avatar { width: 42px; height: 42px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .teacher-details { flex: 1; }
+        .teacher-details h4 { font-size: 14px; font-weight: 700; color: var(--primary); }
+        .teacher-details span { font-size: 12px; color: #888; }
+        .access-perms { display: flex; gap: 6px; flex-wrap: wrap; }
+        .perm-tag { display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: #f0f4f8; border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: #555; }
+        .perm-tag.on { background: rgba(26,58,92,0.12); color: var(--primary); }
+        .perm-tag .dot { width: 7px; height: 7px; border-radius: 50%; background: #ccc; }
+        .perm-tag.on .dot { background: var(--success); }
+
+        /* SUCCESS TOAST */
+        .toast { position: fixed; top: 20px; right: 20px; background: var(--success); color: white; padding: 14px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transform: translateY(-80px); opacity: 0; transition: all 0.3s; z-index: 9999; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* RESULT FORM */
+        .result-preview { background: var(--bg); border-radius: 10px; padding: 16px; margin-top: 16px; }
+        .result-preview table { font-size: 13px; }
+
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-admin-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .sidebar { width: 220px; transform: translateX(-220px); transition: transform 0.3s; }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; }
+            .form-row.cols-2, .form-row.cols-3 { grid-template-columns: 1fr; }
+            .gallery-admin-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <h2>🏫 পায়রাহাট মাধ্যমিক বিদ্যালয়</h2>
+        <p>Admin Dashboard</p>
+    </div>
+    <div class="user-badge">
+        <div class="user-avatar" id="userAvatar">👤</div>
+        <div class="name" id="userName">লোড হচ্ছে...</div>
+        <div class="role" id="userRole">—</div>
+    </div>
+    <nav>
+        <div class="nav-section">প্রধান মেনু</div>
+        <div class="nav-item active" onclick="showPanel('overview', this)"><span class="icon">📊</span> ওভারভিউ</div>
+        <div class="nav-section">কন্টেন্ট</div>
+        <div class="nav-item" onclick="showPanel('notices', this)" id="navNotices"><span class="icon">📋</span> নোটিশ ব্যবস্থাপনা</div>
+        <div class="nav-item" onclick="showPanel('gallery', this)" id="navGallery"><span class="icon">🖼️</span> গ্যালারি</div>
+        <div class="nav-item" onclick="showPanel('results', this)" id="navResults"><span class="icon">📈</span> ফলাফল</div>
+        <div class="nav-item" onclick="showPanel('events', this)" id="navEvents"><span class="icon">📅</span> অনুষ্ঠান</div>
+        <div class="nav-section admin-only">প্রশাসন</div>
+        <div class="nav-item admin-only" onclick="showPanel('teachers', this)"><span class="icon">👨‍🏫</span> শিক্ষক অ্যাক্সেস</div>
+        <div class="nav-item admin-only" onclick="showPanel('users', this)"><span class="icon">👥</span> ব্যবহারকারী</div>
+    </nav>
+    <div class="logout-btn" onclick="logout()">🚪 লগআউট</div>
+</div>
+
+<div class="main">
+    <div class="topbar">
+        <h1 id="pageTitle">ড্যাশবোর্ড ওভারভিউ</h1>
+        <div class="topbar-right">
+            <span id="topDateTime"></span>
+            <button class="view-site-btn" onclick="window.open('index.html','_blank')">🌐 ওয়েবসাইট দেখুন</button>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- OVERVIEW PANEL -->
+        <div class="panel active" id="panel-overview">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="val">২,৮০০</div>
+                    <div class="lbl">মোট শিক্ষার্থী</div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="val">৮৫</div>
+                    <div class="lbl">মোট শিক্ষক</div>
+                </div>
+                <div class="stat-card green">
+                    <div class="val" id="noticeCount">০</div>
+                    <div class="lbl">সক্রিয় নোটিশ</div>
+                </div>
+                <div class="stat-card red">
+                    <div class="val" id="galleryCount">০</div>
+                    <div class="lbl">গ্যালারি ছবি</div>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📋 সাম্প্রতিক নোটিশ</h3>
+                        <button class="btn btn-primary btn-sm" onclick="showPanel('notices', document.getElementById('navNotices'))">সব দেখুন</button>
+                    </div>
+                    <div class="card-body" id="recentNoticesOverview"></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>📊 দ্রুত পরিসংখ্যান</h3></div>
+                    <div class="card-body">
+                        <table>
+                            <tr><td>SSC ২০২৪ পাসের হার</td><td style="font-weight:700; color:#27ae60;">৯৮%</td></tr>
+                            <tr><td>JSC ২০২৪ পাসের হার</td><td style="font-weight:700; color:#27ae60;">৯৭.৯%</td></tr>
+                            <tr><td>মোট GPA-5 (SSC)</td><td style="font-weight:700; color:#2980b9;">৬৮ জন</td></tr>
+                            <tr><td>নতুন ভর্তি ২০২৫</td><td style="font-weight:700; color:#c8a951;">প্রক্রিয়াধীন</td></tr>
+                            <tr><td>মোট কক্ষ</td><td style="font-weight:700;">৪৫টি</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOTICES PANEL -->
+        <div class="panel" id="panel-notices">
+            <div class="card">
+                <div class="card-header">
+                    <h3>➕ নতুন নোটিশ যোগ করুন</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-row cols-2">
+                        <div class="form-group"><label>নোটিশের শিরোনাম</label><input type="text" id="nTitle" placeholder="নোটিশের বিষয়..."></div>
+                        <div class="form-group"><label>শ্রেণী</label>
+                            <select id="nBadge">
+                                <option value="urgent">⚠ জরুরি</option>
+                                <option value="info">ℹ তথ্য</option>
+                                <option value="event">🎉 অনুষ্ঠান</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row cols-3">
+                        <div class="form-group"><label>দিন (বাংলায়)</label><input type="text" id="nDay" placeholder="১৫"></div>
+                        <div class="form-group"><label>মাস (বাংলায়)</label><input type="text" id="nMonth" placeholder="অক্টো"></div>
+                        <div class="form-group"><label>PDF আছে?</label>
+                            <select id="nPdf"><option value="false">না</option><option value="true">হ্যাঁ</option></select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>বিস্তারিত বিবরণ</label><textarea id="nDesc" placeholder="নোটিশের বিস্তারিত লিখুন..."></textarea></div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-outline" onclick="clearNoticeForm()">বাতিল</button>
+                        <button class="btn btn-accent" onclick="addNotice()">✔ নোটিশ প্রকাশ করুন</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h3>📋 সমস্ত নোটিশ</h3></div>
+                <div class="card-body" id="adminNoticeList"></div>
+            </div>
+        </div>
+
+        <!-- GALLERY PANEL -->
+        <div class="panel" id="panel-gallery">
+            <div class="card">
+                <div class="card-header"><h3>➕ নতুন ছবি যোগ করুন</h3></div>
+                <div class="card-body">
+                    <div class="form-row cols-3">
+                        <div class="form-group"><label>ছবির URL</label><input type="text" id="gSrc" placeholder="https://..."></div>
+                        <div class="form-group"><label>ক্যাপশন</label><input type="text" id="gCaption" placeholder="ছবির বিবরণ..."></div>
+                        <div class="form-group"><label>বিভাগ</label>
+                            <select id="gCat">
+                                <option value="event">অনুষ্ঠান</option>
+                                <option value="sports">খেলাধুলা</option>
+                                <option value="academic">একাডেমিক</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-accent" onclick="addGallery()">✔ ছবি যোগ করুন</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h3>🖼️ গ্যালারি পরিচালনা</h3></div>
+                <div class="card-body">
+                    <div class="gallery-admin-grid" id="adminGalleryGrid"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS PANEL -->
+        <div class="panel" id="panel-results">
+            <div class="card">
+                <div class="card-header"><h3>📈 ফলাফল আপডেট করুন</h3></div>
+                <div class="card-body">
+                    <div class="form-row cols-2">
+                        <div class="form-group"><label>পরীক্ষার ধরন</label>
+                            <select id="rType">
+                                <option value="ssc">SSC</option>
+                                <option value="jsc">JSC</option>
+                                <option value="annual">বার্ষিক</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>সাল</label><input type="text" id="rYear" value="২০২৪"></div>
+                    </div>
+                    <div class="form-row cols-4" style="grid-template-columns: repeat(4,1fr);">
+                        <div class="form-group"><label>মোট পরীক্ষার্থী</label><input type="text" id="rTotal" placeholder="২৪৫"></div>
+                        <div class="form-group"><label>উত্তীর্ণ</label><input type="text" id="rPassed" placeholder="২৪০"></div>
+                        <div class="form-group"><label>GPA-5</label><input type="text" id="rGpa5" placeholder="৬৮"></div>
+                        <div class="form-group"><label>পাশের হার</label><input type="text" id="rRate" placeholder="৯৮%"></div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-accent" onclick="showToast('ফলাফল সফলভাবে আপডেট হয়েছে!')">✔ ফলাফল আপডেট করুন</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h3>📊 বর্তমান ফলাফল সারসংক্ষেপ</h3></div>
+                <div class="card-body">
+                    <table>
+                        <thead><tr><th>পরীক্ষা</th><th>সাল</th><th>মোট</th><th>উত্তীর্ণ</th><th>GPA-5</th><th>হার</th></tr></thead>
+                        <tbody>
+                            <tr><td>SSC</td><td>২০২৪</td><td>২৪৫</td><td>২৪০</td><td>৬৮</td><td style="color:#27ae60; font-weight:700;">৯৮%</td></tr>
+                            <tr><td>JSC</td><td>২০২৪</td><td>৩৮০</td><td>৩৭২</td><td>৯২</td><td style="color:#27ae60; font-weight:700;">৯৭.৯%</td></tr>
+                            <tr><td>বার্ষিক</td><td>২০২৪</td><td>২৮০০</td><td>২৭৩০</td><td>৩৪০</td><td style="color:#27ae60; font-weight:700;">৯৭.৫%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- EVENTS PANEL -->
+        <div class="panel" id="panel-events">
+            <div class="card">
+                <div class="card-header"><h3>➕ নতুন অনুষ্ঠান যোগ করুন</h3></div>
+                <div class="card-body">
+                    <div class="form-row cols-2">
+                        <div class="form-group"><label>অনুষ্ঠানের নাম</label><input type="text" id="evTitle" placeholder="অনুষ্ঠানের নাম..."></div>
+                        <div class="form-group"><label>তারিখ</label><input type="text" id="evDate" placeholder="১৮ অক্টোবর ২০২৪"></div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-accent" onclick="addEvent()">✔ অনুষ্ঠান যোগ করুন</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h3>📅 আসন্ন অনুষ্ঠানসমূহ</h3></div>
+                <div class="card-body" id="adminEventList"></div>
+            </div>
+        </div>
+
+        <!-- TEACHERS ACCESS PANEL -->
+        <div class="panel" id="panel-teachers">
+            <div class="card">
+                <div class="card-header"><h3>👨‍🏫 শিক্ষক অ্যাক্সেস নিয়ন্ত্রণ</h3></div>
+                <div class="card-body">
+                    <p style="font-size:13px; color:#888; margin-bottom:20px;">প্রতিটি শিক্ষকের জন্য কোন কোন বিভাগে অ্যাক্সেস থাকবে তা নিয়ন্ত্রণ করুন।</p>
+                    <div class="access-grid" id="teacherAccessList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- USERS PANEL -->
+        <div class="panel" id="panel-users">
+            <div class="card">
+                <div class="card-header">
+                    <h3>👥 ব্যবহারকারী ব্যবস্থাপনা</h3>
+                    <button class="btn btn-primary btn-sm" onclick="showAddUserForm()">+ নতুন ব্যবহারকারী</button>
+                </div>
+                <div class="card-body">
+                    <div id="addUserForm" style="display:none; background:#f8f9fb; border-radius:10px; padding:18px; margin-bottom:18px;">
+                        <div class="form-row cols-3">
+                            <div class="form-group"><label>নাম</label><input type="text" id="nuName" placeholder="পূর্ণ নাম"></div>
+                            <div class="form-group"><label>ব্যবহারকারী নাম</label><input type="text" id="nuUser" placeholder="username"></div>
+                            <div class="form-group"><label>পাসওয়ার্ড</label><input type="password" id="nuPass" placeholder="••••••••"></div>
+                        </div>
+                        <div class="form-row cols-2">
+                            <div class="form-group"><label>ভূমিকা</label>
+                                <select id="nuRole"><option value="teacher">শিক্ষক</option><option value="admin">অ্যাডমিন</option></select>
+                            </div>
+                            <div class="form-group"><label>বিষয়</label><input type="text" id="nuSubject" placeholder="বিষয়ের নাম"></div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-outline" onclick="document.getElementById('addUserForm').style.display='none'">বাতিল</button>
+                            <button class="btn btn-accent" onclick="addUser()">✔ ব্যবহারকারী যোগ করুন</button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead><tr><th>নাম</th><th>ব্যবহারকারী</th><th>ভূমিকা</th><th>বিষয়</th><th>অবস্থা</th><th>কার্যক্রম</th></tr></thead>
+                        <tbody id="userTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== DATA =====
+const defaultUsers = [
+    { id: 1, name: 'Admin User', user: 'admin', role: 'admin', subject: '—', active: true },
+    { id: 2, name: 'মো. আবদুল করিম', user: 'teacher1', role: 'teacher', subject: 'গণিত', active: true },
+    { id: 3, name: 'রাহেলা বেগম', user: 'teacher2', role: 'teacher', subject: 'বাংলা', active: true },
+    { id: 4, name: 'মো. সফিকুল ইসলাম', user: 'teacher3', role: 'teacher', subject: 'বিজ্ঞান', active: false }
+];
+const defaultTeacherAccess = [
+    { name: 'মো. আবদুল করিম', subject: 'গণিত', emoji: '👨‍🏫', perms: { notice: true, gallery: false, result: true, event: false } },
+    { name: 'রাহেলা বেগম', subject: 'বাংলা', emoji: '👩‍🏫', perms: { notice: true, gallery: true, result: true, event: true } },
+    { name: 'মো. সফিকুল ইসলাম', subject: 'বিজ্ঞান', emoji: '👨‍🔬', perms: { notice: false, gallery: true, result: false, event: true } }
+];
+const defaultNotices = [
+    { id: 1, title: "২০২৫ সালের বার্ষিক পরীক্ষার সময়সূচী", desc: "সকল শ্রেণীর বার্ষিক পরীক্ষা ২০ নভেম্বর থেকে শুরু হবে।", day: "১৫", month: "অক্টো", badge: "urgent", pdf: true },
+    { id: 2, title: "বার্ষিক ক্রীড়া প্রতিযোগিতা ২০২৫ - রেজিস্ট্রেশন", desc: "বিদ্যালয়ের বার্ষিক ক্রীড়া দিবস উপলক্ষে নিবন্ধন চলছে।", day: "১০", month: "অক্টো", badge: "event", pdf: false },
+    { id: 3, title: "মডেল টেস্ট পরীক্ষার রুটিন", desc: "মডেল টেস্ট ২৫ অক্টোবর থেকে শুরু।", day: "০৮", month: "অক্টো", badge: "info", pdf: true }
+];
+const defaultGallery = [
+    { id:1, src: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=300", caption: "বার্ষিক পুরস্কার বিতরণী", category: "event" },
+    { id:2, src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=300", caption: "বিজ্ঞান মেলা ২০২৪", category: "academic" },
+    { id:3, src: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=300", caption: "ক্রীড়া দিবস", category: "sports" },
+    { id:4, src: "https://images.unsplash.com/photo-1588072432836-e10032774350?w=300", caption: "সাংস্কৃতিক অনুষ্ঠান", category: "event" }
+];
+const defaultEvents = [
+    { id:1, title: "অভিভাবক সমাবেশ", date: "১৮ অক্টোবর ২০২৪" },
+    { id:2, title: "বার্ষিক ক্রীড়া দিবস", date: "২৫ অক্টোবর ২০২৪" },
+    { id:3, title: "বার্ষিক পরীক্ষা শুরু", date: "২০ নভেম্বর ২০২৪" }
+];
+
+function DB_get(k, def) { try { const d=localStorage.getItem(k); return d?JSON.parse(d):def; } catch { return def; } }
+function DB_set(k,v) { localStorage.setItem(k,JSON.stringify(v)); }
+
+// ===== AUTH =====
+const session = DB_get('loggedIn', null);
+if (!session) { window.location.href = 'admin-login.html'; }
+const isAdmin = session && session.role === 'admin';
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('userName').textContent = session ? session.user : '—';
+    document.getElementById('userRole').textContent = session?.role === 'admin' ? '🛡️ Super Admin' : '👨‍🏫 শিক্ষক';
+    document.getElementById('userAvatar').textContent = session?.role === 'admin' ? '🛡️' : '👨‍🏫';
+
+    // Hide admin-only items for teachers
+    if (!isAdmin) {
+        document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+        const access = getTeacherAccess();
+        if (access) {
+            if (!access.perms.notice) document.getElementById('navNotices').style.display = 'none';
+            if (!access.perms.gallery) document.getElementById('navGallery').style.display = 'none';
+            if (!access.perms.result) document.getElementById('navResults').style.display = 'none';
+            if (!access.perms.event) document.getElementById('navEvents').style.display = 'none';
+        }
+    }
+
+    setInterval(() => {
+        document.getElementById('topDateTime').textContent = new Date().toLocaleString('bn-BD');
+    }, 1000);
+
+    renderOverview();
+    renderAdminNotices();
+    renderAdminGallery();
+    renderAdminEvents();
+    renderTeacherAccess();
+    renderUsers();
+});
+
+function getTeacherAccess() {
+    const ta = DB_get('teacherAccess', defaultTeacherAccess);
+    const idx = parseInt(session?.user?.replace('teacher','')) - 1;
+    return ta[idx] || null;
+}
+
+// ===== PANELS =====
+function showPanel(id, navEl) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    if (navEl) navEl.classList.add('active');
+    const titles = { overview:'ড্যাশবোর্ড ওভারভিউ', notices:'নোটিশ ব্যবস্থাপনা', gallery:'গ্যালারি', results:'ফলাফল', events:'অনুষ্ঠান', teachers:'শিক্ষক অ্যাক্সেস', users:'ব্যবহারকারী' };
+    document.getElementById('pageTitle').textContent = titles[id] || '';
+}
+
+// ===== OVERVIEW =====
+function renderOverview() {
+    const notices = DB_get('notices', defaultNotices);
+    const gallery = DB_get('gallery', defaultGallery);
+    document.getElementById('noticeCount').textContent = notices.length;
+    document.getElementById('galleryCount').textContent = gallery.length;
+    const el = document.getElementById('recentNoticesOverview');
+    el.innerHTML = notices.slice(0,4).map(n => `
+        <div style="display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #f0f4f8;">
+            <span class="badge badge-${n.badge}">${n.badge==='urgent'?'জরুরি':n.badge==='event'?'অনুষ্ঠান':'তথ্য'}</span>
+            <span style="font-size:13px; flex:1;">${n.title}</span>
+            <span style="font-size:11px; color:#aaa;">${n.day} ${n.month}</span>
+        </div>`).join('');
+}
+
+// ===== NOTICES =====
+function renderAdminNotices() {
+    const notices = DB_get('notices', defaultNotices);
+    const el = document.getElementById('adminNoticeList');
+    if (!el) return;
+    el.innerHTML = notices.map(n => `
+        <div class="notice-admin-item">
+            <div style="min-width:44px; background:var(--primary); color:white; border-radius:8px; padding:6px; text-align:center; font-size:12px; font-weight:700;">${n.day}<br><small>${n.month}</small></div>
+            <div class="notice-meta">
+                <span class="badge badge-${n.badge}" style="margin-bottom:4px; display:inline-block;">${n.badge==='urgent'?'⚠ জরুরি':n.badge==='event'?'🎉 অনুষ্ঠান':'ℹ তথ্য'}</span>
+                <h4>${n.title}</h4>
+                <p>${n.desc}</p>
+            </div>
+            <div class="notice-actions">
+                <button class="btn btn-outline btn-sm" onclick="deleteNotice(${n.id})">🗑 মুছুন</button>
+            </div>
+        </div>`).join('');
+}
+
+function addNotice() {
+    const title = document.getElementById('nTitle').value.trim();
+    const desc = document.getElementById('nDesc').value.trim();
+    const day = document.getElementById('nDay').value.trim();
+    const month = document.getElementById('nMonth').value.trim();
+    const badge = document.getElementById('nBadge').value;
+    const pdf = document.getElementById('nPdf').value === 'true';
+    if (!title || !desc) { showToast('শিরোনাম ও বিবরণ পূরণ করুন!', 'error'); return; }
+    const notices = DB_get('notices', defaultNotices);
+    const newId = Math.max(...notices.map(n=>n.id), 0) + 1;
+    notices.unshift({ id: newId, title, desc, day: day||'০১', month: month||'জান', badge, pdf, date: new Date().toISOString() });
+    DB_set('notices', notices);
+    clearNoticeForm();
+    renderAdminNotices();
+    renderOverview();
+    showToast('নোটিশ সফলভাবে প্রকাশিত হয়েছে!');
+}
+
+function deleteNotice(id) {
+    if (!confirm('এই নোটিশটি মুছে ফেলবেন?')) return;
+    let notices = DB_get('notices', defaultNotices);
+    notices = notices.filter(n => n.id !== id);
+    DB_set('notices', notices);
+    renderAdminNotices();
+    renderOverview();
+    showToast('নোটিশ মুছে ফেলা হয়েছে।');
+}
+
+function clearNoticeForm() {
+    ['nTitle','nDesc','nDay','nMonth'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+}
+
+// ===== GALLERY =====
+function renderAdminGallery() {
+    const gallery = DB_get('gallery', defaultGallery);
+    const el = document.getElementById('adminGalleryGrid');
+    if (!el) return;
+    el.innerHTML = gallery.map(g => `
+        <div class="gallery-admin-item">
+            <img src="${g.src}" alt="${g.caption}" onerror="this.src='https://via.placeholder.com/300x200?text=ছবি+লোড+হয়নি'">
+            <div class="g-overlay">
+                <button class="btn btn-danger btn-sm" onclick="deleteGallery(${g.id})">🗑</button>
+            </div>
+            <div class="g-caption">${g.caption}</div>
+        </div>`).join('');
+}
+
+function addGallery() {
+    const src = document.getElementById('gSrc').value.trim();
+    const caption = document.getElementById('gCaption').value.trim();
+    const category = document.getElementById('gCat').value;
+    if (!src || !caption) { showToast('URL এবং ক্যাপশন পূরণ করুন!', 'error'); return; }
+    const gallery = DB_get('gallery', defaultGallery);
+    gallery.push({ id: Date.now(), src, caption, category });
+    DB_set('gallery', gallery);
+    document.getElementById('gSrc').value = '';
+    document.getElementById('gCaption').value = '';
+    renderAdminGallery();
+    showToast('ছবি সফলভাবে গ্যালারিতে যোগ হয়েছে!');
+}
+
+function deleteGallery(id) {
+    if (!confirm('এই ছবিটি মুছবেন?')) return;
+    let gallery = DB_get('gallery', defaultGallery);
+    gallery = gallery.filter(g => g.id !== id);
+    DB_set('gallery', gallery);
+    renderAdminGallery();
+    showToast('ছবি সরানো হয়েছে।');
+}
+
+// ===== EVENTS =====
+function renderAdminEvents() {
+    const events = DB_get('events', defaultEvents);
+    const el = document.getElementById('adminEventList');
+    if (!el) return;
+    el.innerHTML = `<table><thead><tr><th>অনুষ্ঠান</th><th>তারিখ</th><th>কার্যক্রম</th></tr></thead><tbody>
+        ${events.map(e => `<tr><td>${e.title}</td><td>${e.date}</td><td><button class="btn btn-danger btn-sm" onclick="deleteEvent(${e.id})">🗑 মুছুন</button></td></tr>`).join('')}
+    </tbody></table>`;
+}
+
+function addEvent() {
+    const title = document.getElementById('evTitle').value.trim();
+    const date = document.getElementById('evDate').value.trim();
+    if (!title || !date) { showToast('সব তথ্য পূরণ করুন!', 'error'); return; }
+    const events = DB_get('events', defaultEvents);
+    events.push({ id: Date.now(), title, date });
+    DB_set('events', events);
+    document.getElementById('evTitle').value = '';
+    document.getElementById('evDate').value = '';
+    renderAdminEvents();
+    showToast('অনুষ্ঠান সফলভাবে যোগ হয়েছে!');
+}
+
+function deleteEvent(id) {
+    let events = DB_get('events', defaultEvents);
+    events = events.filter(e => e.id !== id);
+    DB_set('events', events);
+    renderAdminEvents();
+    showToast('অনুষ্ঠান মুছে ফেলা হয়েছে।');
+}
+
+// ===== TEACHER ACCESS =====
+function renderTeacherAccess() {
+    const ta = DB_get('teacherAccess', defaultTeacherAccess);
+    const el = document.getElementById('teacherAccessList');
+    if (!el) return;
+    const permLabels = { notice: 'নোটিশ', gallery: 'গ্যালারি', result: 'ফলাফল', event: 'অনুষ্ঠান' };
+    el.innerHTML = ta.map((t, ti) => `
+        <div class="teacher-row">
+            <div class="teacher-avatar">${t.emoji}</div>
+            <div class="teacher-details">
+                <h4>${t.name}</h4>
+                <span>${t.subject}</span>
+            </div>
+            <div class="access-perms">
+                ${Object.entries(t.perms).map(([k,v]) => `
+                    <div class="perm-tag ${v?'on':''}" onclick="togglePerm(${ti},'${k}')">
+                        <div class="dot"></div>${permLabels[k]}
+                    </div>`).join('')}
+            </div>
+        </div>`).join('');
+}
+
+function togglePerm(ti, perm) {
+    if (!isAdmin) return;
+    const ta = DB_get('teacherAccess', defaultTeacherAccess);
+    ta[ti].perms[perm] = !ta[ti].perms[perm];
+    DB_set('teacherAccess', ta);
+    renderTeacherAccess();
+    showToast('অ্যাক্সেস সেটিং আপডেট হয়েছে!');
+}
+
+// ===== USERS =====
+function renderUsers() {
+    const users = DB_get('siteUsers', defaultUsers);
+    const tbody = document.getElementById('userTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = users.map(u => `
+        <tr>
+            <td>${u.name}</td>
+            <td><code>${u.user}</code></td>
+            <td><span class="badge badge-${u.role}">${u.role==='admin'?'অ্যাডমিন':'শিক্ষক'}</span></td>
+            <td>${u.subject}</td>
+            <td><span class="badge ${u.active?'badge-active':'badge-inactive'}">${u.active?'সক্রিয়':'নিষ্ক্রিয়'}</span></td>
+            <td>
+                ${isAdmin ? `<button class="btn btn-outline btn-sm" onclick="toggleUser(${u.id})">${u.active?'নিষ্ক্রিয়':'সক্রিয়'}</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">🗑</button>` : '—'}
+            </td>
+        </tr>`).join('');
+}
+
+function showAddUserForm() { document.getElementById('addUserForm').style.display = 'block'; }
+
+function addUser() {
+    const name = document.getElementById('nuName').value.trim();
+    const user = document.getElementById('nuUser').value.trim();
+    const role = document.getElementById('nuRole').value;
+    const subject = document.getElementById('nuSubject').value.trim();
+    if (!name || !user) { showToast('নাম ও ব্যবহারকারী নাম পূরণ করুন!', 'error'); return; }
+    const users = DB_get('siteUsers', defaultUsers);
+    users.push({ id: Date.now(), name, user, role, subject: subject||'—', active: true });
+    DB_set('siteUsers', users);
+    document.getElementById('addUserForm').style.display = 'none';
+    renderUsers();
+    showToast('নতুন ব্যবহারকারী যোগ হয়েছে!');
+}
+
+function toggleUser(id) {
+    const users = DB_get('siteUsers', defaultUsers);
+    const u = users.find(u => u.id === id);
+    if (u) u.active = !u.active;
+    DB_set('siteUsers', users);
+    renderUsers();
+    showToast('ব্যবহারকারীর অবস্থা পরিবর্তিত হয়েছে।');
+}
+
+function deleteUser(id) {
+    if (!confirm('এই ব্যবহারকারী মুছবেন?')) return;
+    let users = DB_get('siteUsers', defaultUsers);
+    users = users.filter(u => u.id !== id);
+    DB_set('siteUsers', users);
+    renderUsers();
+    showToast('ব্যবহারকারী মুছে ফেলা হয়েছে।');
+}
+
+// ===== TOAST =====
+function showToast(msg, type='success') {
+    const t = document.getElementById('toast');
+    t.textContent = (type==='error' ? '❌ ' : '✅ ') + msg;
+    t.style.background = type==='error' ? '#e74c3c' : '#27ae60';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ===== LOGOUT =====
+function logout() {
+    localStorage.removeItem('loggedIn');
+    window.location.href = 'admin-login.html';
+}
+</script>
+</body>
+</html>

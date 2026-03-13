@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | পায়রাহাট মাধ্যমিক বিদ্যালয়</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Hind Siliguri', sans-serif; background: #0f2540; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        body::before { content: ''; position: fixed; inset: 0; background: url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1600') center/cover; opacity: 0.08; }
+        .login-card { background: white; border-radius: 20px; overflow: hidden; width: 100%; max-width: 440px; box-shadow: 0 40px 80px rgba(0,0,0,0.4); position: relative; z-index: 1; }
+        .login-header { background: linear-gradient(135deg, #1a3a5c, #0f2540); color: white; padding: 36px 32px; text-align: center; }
+        .login-header .school-logo { font-size: 48px; margin-bottom: 10px; }
+        .login-header h1 { font-family: 'Merriweather', serif; font-size: 20px; margin-bottom: 6px; color: #c8a951; }
+        .login-header p { font-size: 13px; opacity: 0.7; }
+        .login-body { padding: 32px; }
+        .login-body h2 { font-size: 20px; font-weight: 700; color: #1a3a5c; margin-bottom: 24px; text-align: center; }
+        .role-tabs { display: flex; gap: 8px; margin-bottom: 24px; background: #f0f4f8; border-radius: 10px; padding: 4px; }
+        .role-tab { flex: 1; padding: 10px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; font-family: 'Hind Siliguri', sans-serif; cursor: pointer; background: transparent; color: #555; transition: all 0.2s; }
+        .role-tab.active { background: white; color: #1a3a5c; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; }
+        .form-group input { width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: 'Hind Siliguri', sans-serif; transition: all 0.2s; outline: none; }
+        .form-group input:focus { border-color: #1a3a5c; }
+        .btn-login { width: 100%; padding: 14px; background: #1a3a5c; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; font-family: 'Hind Siliguri', sans-serif; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+        .btn-login:hover { background: #0f2540; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(26,58,92,0.3); }
+        .back-link { display: block; text-align: center; margin-top: 20px; font-size: 13px; color: #888; text-decoration: none; }
+        .back-link:hover { color: #1a3a5c; }
+        .error-msg { background: #fde8e8; color: #c0392b; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 16px; display: none; }
+        .error-msg.show { display: block; }
+        .creds-hint { background: rgba(200,169,81,0.1); border: 1px solid rgba(200,169,81,0.3); border-radius: 8px; padding: 12px; font-size: 12px; color: #7a6020; margin-bottom: 16px; }
+        .creds-hint strong { display: block; margin-bottom: 4px; color: #5a4010; }
+    </style>
+</head>
+<body>
+<div class="login-card">
+    <div class="login-header">
+        <div class="school-logo">🏫</div>
+        <h1>পায়রাহাট মাধ্যমিক বিদ্যালয়</h1>
+        <p>Pairahat Secondary School— Admin Portal</p>
+    </div>
+    <div class="login-body">
+        <h2>🔐 লগইন করুন</h2>
+        <div class="role-tabs">
+            <button class="role-tab active" onclick="setRole('admin', this)">🛡️ Admin</button>
+            <button class="role-tab" onclick="setRole('teacher', this)">👨‍🏫 Teacher</button>
+        </div>
+        
+        <div class="error-msg" id="errorMsg">❌ ভুল ব্যবহারকারী নাম বা পাসওয়ার্ড।</div>
+        <form onsubmit="doLogin(event)">
+            <div class="form-group">
+                <label>ব্যবহারকারী নাম</label>
+                <input type="text" id="username" placeholder="আপনার ব্যবহারকারী নাম" required>
+            </div>
+            <div class="form-group">
+                <label>পাসওয়ার্ড</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-login">লগইন করুন →</button>
+        </form>
+        <a href="index.html" class="back-link">← মূল ওয়েবসাইটে ফিরে যান</a>
+    </div>
+</div>
+<script>
+let currentRole = 'admin';
+const credentials = {
+    admin: [{ user: 'admin', pass: 'admin123' }],
+    teacher: [
+        { user: 'teacher1', pass: 'teacher123' },
+        { user: 'teacher2', pass: 'teach456' },
+        { user: 'teacher3', pass: 'pass789' }
+    ]
+};
+function setRole(role, btn) {
+    currentRole = role;
+    document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const hint = document.getElementById('credHint');
+    if (role === 'admin') hint.innerHTML = '<strong>Demo Admin:</strong> ব্যবহারকারী: <b>admin</b> | পাসওয়ার্ড: <b>admin123</b>';
+    else hint.innerHTML = '<strong>Demo Teacher:</strong> ব্যবহারকারী: <b>teacher1</b> | পাসওয়ার্ড: <b>teacher123</b>';
+}
+function doLogin(e) {
+    e.preventDefault();
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value;
+    const match = credentials[currentRole].find(c => c.user === user && c.pass === pass);
+    if (match) {
+        localStorage.setItem('loggedIn', JSON.stringify({ role: currentRole, user }));
+        window.location.href = 'admin-dashboard.html';
+    } else {
+        document.getElementById('errorMsg').classList.add('show');
+    }
+}
+</script>
+</body>
+</html>
