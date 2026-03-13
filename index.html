@@ -1,345 +1,445 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pairahat Secondary School</title>
+    <title>পায়রাহাট মাধ্যমিক বিদ্যালয় | Pairahat Secondary School</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="ticker.css">
-    <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="token.css">
-    <link rel="stylesheet" href="header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Notice Ticker -->
-    <section class="ticker-bar">
-      <div class="container ticker-wrap">
-        <span class="ticker-label">Latest Notice</span>
-        <div class="ticker-scroll">
-          <div class="ticker-track">
-            <span>📢 Admission open for 2026 session</span>
-            <span>📅 Annual Sports Day on 15th March</span>
-            <span>📝 SSC Model Test Exam starts next week</span>
-            <span>🏆 Science Fair Registration is ongoing</span>
-            <span>📢 Admission open for 2026 session</span>
-            <span>📅 Annual Sports Day on 15th March</span>
-            <span>📝 SSC Model Test Exam starts next week</span>
-            <span>🏆 Science Fair Registration is ongoing</span>
-          </div>
+<!-- TOP BAR -->
+<div class="topbar">
+    <div class="container">
+        <div class="topbar-left">
+            <span>📞 +8801754678501</span>
+            <span>✉ gmrashidulislam003@gmail.com</span>
         </div>
-      </div>
-    </section>
+        <div class="topbar-right">
+            <span id="current-datetime"></span>
+            <a href="admin-login.html" class="admin-link">🔐 Admin / Teacher Login</a>
+        </div>
+    </div>
+</div>
 
-    <!-- Header -->
-    <header>
-        <div class="container header-inner">
-          <div class="header-brand">
-            <div class="header-emblem">🎓</div>
-            <div class="header-text">
-              <h1>Pairahat Secondary School</h1>
-              <p class="bn">পায়রাহাট মাধ্যমিক বিদ্যালয় — Pairahat, Abhaynagar, Jashore</p>
-              
+<!-- HEADER -->
+<header class="header" id="header">
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon">
+                <svg width="60" height="60" viewBox="0 0 60 60">
+                    <circle cx="30" cy="30" r="28" fill="#1a3a5c" stroke="#c8a951" stroke-width="3"/>
+                    <text x="30" y="22" text-anchor="middle" fill="#c8a951" font-size="10" font-family="serif">পায়রাহাট</text>
+                    <text x="30" y="35" text-anchor="middle" fill="white" font-size="7" font-family="serif">মাধ্যমিক বিদ্যালয়</text>
+                    <text x="30" y="46" text-anchor="middle" fill="#c8a951" font-size="6">EST. 1949</text>
+                </svg>
             </div>
-          </div>
-          <div class="lang-switch" role="navigation">
-            <a href="#">English</a>
-            <a href="#">বাংলা</a>
-          </div>
+            <div class="logo-text">
+                <h1>পায়রাহাট মাধ্যমিক বিদ্যালয়</h1>
+                <p>Pairahat Secondary School</p>
+                <span>জ্ঞান, মূল্যবোধ ও সেবা</span>
+            </div>
         </div>
-    </header>
-
-    <!-- Navigation -->
-    <nav id="mainNav">
-      <div class="nav-container">
-
-        <ul class="nav-links">
-
-          <li>
-            <a href="index.html">Home</a>
-          </li>
-
-          <li>
-            <a href="about.html">About School <span class="arrow">▾</span></a>
-            <ul class="dropdown">
-              <li><a href="atAglance.html">At a Glance</a></li>
-              <li><a href="history.html">History</a></li>
-              <li><a href="whyStudy.html">Why Study Here</a></li>
-              <li><a href="Insfrastructure.html">Infrastructure</a></li>
-              <li><a href="achievements.html">Achievements</a></li>
-              <li><a href="news.html">News &amp; Events</a></li>
+        <nav class="navbar" id="navbar">
+            <ul>
+                <li><a href="#home" class="nav-link active">হোম</a></li>
+                <li><a href="#about" class="nav-link">আমাদের সম্পর্কে</a></li>
+                <li class="dropdown">
+                    <a href="#academics" class="nav-link">একাডেমিক ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="#academics">পাঠ্যক্রম</a>
+                        <a href="#teachers">শিক্ষকমণ্ডলী</a>
+                        <a href="#results">পরীক্ষার ফলাফল</a>
+                        <a href="#routine">ক্লাস রুটিন</a>
+                    </div>
+                </li>
+                <li><a href="#notice" class="nav-link">নোটিশ বোর্ড</a></li>
+                <li><a href="#gallery" class="nav-link">গ্যালারি</a></li>
+                <li><a href="#contact" class="nav-link">যোগাযোগ</a></li>
             </ul>
-          </li>
-
-          <li>
-            <a href="administration.html">Administration <span class="arrow">▾</span></a>
-            <ul class="dropdown">
-              <li><a href="managing.html">Managing Committee</a></li>
-              <li><a href="teachers.html">Teachers &amp; Staff</a></li>
-              <li><a href="headmaster.html">Headmaster's Message</a></li>
-            </ul>
-          </li>
-
-          <li>
-            <a href="academics.html">Academics <span class="arrow">▾</span></a>
-            <ul class="dropdown">
-              <li><a href="conducts.html">Code of Conduct</a></li>
-              <li><a href="guideline.html">Guideline for Parents</a></li>
-              <li><a href="dress.html">Dress Code</a></li>
-            </ul>
-          </li>
-
-          <li>
-            <a href="students.html">Students <span class="arrow">▾</span></a>
-            <ul class="dropdown">
-              <li><a href="contact.html">Contact</a></li>
-              <li><a href="#">Notices</a></li>
-              <li><a href="result.html">Result</a></li>
-            </ul>
-          </li>
-
-          <li>
-            <a href="gallery.html">Gallery <span class="arrow">▾</span></a>
-            <ul class="dropdown">
-              <li><a href="photos.html">Photos</a></li>
-              <li><a href="videos.html">Videos</a></li>
-            </ul>
-          </li>
-          <li><a href="notice.html">Notices</a></li>
-          <li><a href="result.html">Result</a></li>
-
-        </ul>
-
-        <!-- Auth Buttons -->
-        <div class="nav-auth">
-          <a href="login.html" class="nav-btn-outline">Login</a>
-          <a href="signUp.html" class="nav-btn-primary">Register</a>
-        </div>
-
-        <!-- Hamburger -->
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span>
-          <span></span>
-          <span></span>
+        </nav>
+        <button class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
         </button>
+    </div>
+</header>
 
-      </div>
-
-      <!-- Mobile Drawer -->
-      <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-inner">
-          <ul>
-            <li><a class="mob-home" href="index.html">🏠 Home</a></li>
-
-            <li class="mob-section">About School</li>
-            <li><a href="atAglance.html">At a Glance</a></li>
-            <li><a href="history.html">History</a></li>
-            <li><a href="whyStudy.html">Why Study Here</a></li>
-            <li><a href="Insfrastructure.html">Infrastructure</a></li>
-            <li><a href="achievements.html">Achievements</a></li>
-            <li><a href="news.html">News &amp; Events</a></li>
-
-            <li class="mob-section">Administration</li>
-            <li><a href="managing.html">Managing Committee</a></li>
-            <li><a href="teachers.html">Teachers &amp; Staff</a></li>
-            <li><a href="headmaster.html">Headmaster's Message</a></li>
-
-            <li class="mob-section">Academics</li>
-            <li><a href="conducts.html">Code of Conduct</a></li>
-            <li><a href="guideline.html">Guideline for Parents</a></li>
-            <li><a href="dress.html">Dress Code</a></li>
-
-            <li class="mob-section">Students</li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="#">Notices</a></li>
-            <li><a href="result.html">Result</a></li>
-
-            <li class="mob-section">Gallery</li>
-            <li><a href="photos.html">Photos</a></li>
-            <li><a href="videos.html">Videos</a></li>
-          </ul>
-
-          <div class="mob-auth">
-            <a href="login.html" class="nav-btn-outline">Login</a>
-            <a href="signUp.html" class="nav-btn-primary">Register</a>
-          </div>
+<!-- HERO SECTION -->
+<section class="hero" id="home">
+    <div class="hero-slider" id="heroSlider">
+        <div class="slide active" style="background-image: linear-gradient(rgba(10,25,50,0.65), rgba(10,25,50,0.65)), url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1600')">
         </div>
-      </div>
-    </nav>
+        <div class="slide" style="background-image: linear-gradient(rgba(10,25,50,0.65), rgba(10,25,50,0.65)), url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=1600')">
+        </div>
+        <div class="slide" style="background-image: linear-gradient(rgba(10,25,50,0.65), rgba(10,25,50,0.65)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1600')">
+        </div>
+    </div>
+    <div class="hero-content">
+        <p class="hero-tagline">স্বাগতম</p>
+        <h2>শিক্ষাই জাতির মেরুদণ্ড</h2>
+        <p class="hero-sub">পায়রাহাট মাধ্যমিক বিদ্যালয় - যেখানে প্রতিটি শিশু পায় মানসম্মত শিক্ষা,<br>নৈতিক মূল্যবোধ ও উজ্জ্বল ভবিষ্যৎ গড়ার সুযোগ।</p>
+        <div class="hero-buttons">
+            <a href="#about" class="btn btn-primary">আরও জানুন</a>
+            <a href="#contact" class="btn btn-outline">ভর্তির তথ্য</a>
+        </div>
+    </div>
+    <div class="hero-indicators">
+        <span class="dot active" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
+    </div>
+</section>
 
-    <!-- Animated Hero -->
-    <section class="hero-animated">
-      <div class="hero-bg"></div>
-      <div class="container hero-content">
-        <h2 class="hero-title">Welcome To Pairahat Secondary School</h2>
-        <p class="hero-subtitle">
-          We are committed to providing quality education and shaping the future of our students.
-        </p>
-        <div class="home-actions">
-          <a href="signUp.html" class="login-btn hero-btn">Apply / Registration</a>
-          <a href="login.html" class="secondary-btn hero-btn">Student Login</a>
+<!-- STATS BAR -->
+<div class="stats-bar">
+    <div class="container">
+        <div class="stat-item">
+            <span class="stat-number" data-target="2800">0</span>
+            <span class="stat-label">মোট শিক্ষার্থী</span>
         </div>
-      </div>
-    </section>
+        <div class="stat-item">
+            <span class="stat-number" data-target="85">0</span>
+            <span class="stat-label">অভিজ্ঞ শিক্ষক</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" data-target="98">0</span>
+            <span class="stat-label">% পাশের হার</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" data-target="39">0</span>
+            <span class="stat-label">বছরের অভিজ্ঞতা</span>
+        </div>
+    </div>
+</div>
 
-    <!-- About Preview -->
-    <section class="home-section">
-      <div class="container">
-        <div class="section-head">
-          <h3>About Our School</h3>
-          <p>
-            Established in <b>1949</b>, Pairahat Secondary School is a distinguished non-government secondary institution
-            located in Somospur, Abhaynagar, Jessore under the Khulna Division.
-            With a proud legacy spanning over seven decades, the school has consistently upheld its commitment to academic
-            excellence, discipline, and character building.
-            Recognized by the education board and enlisted under MPO status (EIIN: 115477), the institution continues
-            to nurture responsible, skilled, and morally strong citizens for the future.
-          </p>
-        </div>
+<!-- LATEST NOTICE TICKER -->
+<div class="notice-ticker">
+    <div class="ticker-label">🔔 সর্বশেষ নোটিশ</div>
+    <div class="ticker-wrapper">
+        <div class="ticker-content" id="tickerContent"></div>
+    </div>
+</div>
 
-        <div class="two-col">
-          <div class="panel">
-            <h4>Who We Are</h4>
-            <p>
-              Established in <b>1949</b>, Pairahat Secondary School has been serving the community with dedication.
-              Our goal is to ensure academic excellence and moral development for every student.
-            </p>
-            <a class="link-btn" href="about.html">Read More →</a>
-          </div>
-          <div class="panel">
-            <h4>Our Core Values</h4>
-            <ul class="tick-list">
-              <li>Discipline &amp; Respect</li>
-              <li>Quality Teaching</li>
-              <li>Safe &amp; Friendly Environment</li>
-              <li>Co-curricular Activities</li>
-            </ul>
-          </div>
+<!-- NOTICE BOARD SECTION -->
+<section class="notice-section" id="notice">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">গুরুত্বপূর্ণ</span>
+            <h2>নোটিশ বোর্ড</h2>
+            <p>সর্বশেষ বিজ্ঞপ্তি ও ঘোষণাসমূহ</p>
         </div>
-      </div>
-    </section>
+        <div class="notice-grid">
+            <div class="notice-main">
+                <div class="notice-list" id="noticeList">
+                    <!-- Notices will be rendered by JS -->
+                </div>
+            </div>
+            <div class="notice-sidebar">
+                <div class="sidebar-card events-card">
+                    <h3>📅 আসন্ন অনুষ্ঠান</h3>
+                    <div class="event-list" id="eventList"></div>
+                </div>
+                <div class="sidebar-card admission-card">
+                    <h3>📝 ভর্তি তথ্য ২০২৫</h3>
+                    <p>১ম থেকে ১০ম শ্রেণী পর্যন্ত ভর্তি চলছে</p>
+                    <ul>
+                        <li>আবেদন শুরু: ১ জানুয়ারি ২০২৫</li>
+                        <li>শেষ তারিখ: ৩১ জানুয়ারি ২০২৫</li>
+                        <li>ভর্তি পরীক্ষা: ৫ ফেব্রুয়ারি ২০২৫</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary btn-sm">আবেদন করুন</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Why Choose Us -->
-    <section class="home-section alt">
-      <div class="container">
-        <div class="section-head">
-          <h3>Why Choose Pairahat?</h3>
-          <p>We focus on learning outcomes, discipline, and student growth.</p>
+<!-- ABOUT SECTION -->
+<section class="about-section" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=700" alt="School Building" loading="lazy">
+                <div class="about-badge">
+                    <strong>৭৭</strong>
+                    <span>বছরের শ্রেষ্ঠত্ব</span>
+                </div>
+            </div>
+            <div class="about-content">
+                <span class="section-tag">আমাদের পরিচয়</span>
+                <h2>আমাদের বিদ্যালয় সম্পর্কে</h2>
+                <p>পায়রাহাট মাধ্যমিক বিদ্যালয় দক্ষিণবঙ্গের অন্যতম স্বনামধন্য একটি শিক্ষা প্রতিষ্ঠান। ১৯৪৯ সালে প্রতিষ্ঠিত এই বিদ্যালয়টি দীর্ঘ সাত দশকেরও বেশি সময় ধরে যশোর জেলার অভয়নগর উপজেলায় শিক্ষার আলো ছড়িয়ে আসছে। মানসম্মত শিক্ষা নিশ্চিতকরণ এবং আদর্শ নাগরিক গড়ার দৃঢ় প্রত্যয় নিয়ে বিদ্যালয়টি তার অগ্রযাত্রা অব্যাহত রেখেছে।
+আমাদের লক্ষ্য ও উদ্দেশ্য:
+আমাদের মূল লক্ষ্য হলো শিক্ষার্থীদের কেবল পুঁথিগত বিদ্যায় পারদর্শী করা নয়, বরং নৈতিক মূল্যবোধ, শৃঙ্খলা এবং সৃজনশীলতার সমন্বয়ে তাদের যোগ্য মানুষ হিসেবে গড়ে তোলা। আধুনিক ডিজিটাল বাংলাদেশের চ্যালেঞ্জ মোকাবিলায় আমরা মাল্টিমিডিয়া ক্লাসরুম এবং উন্নত কম্পিউটার ল্যাবের মাধ্যমে প্রযুক্তিগত শিক্ষা প্রদান করছি।
+কেন আমরা অনন্য?
+অভিজ্ঞ শিক্ষক মণ্ডলী: আমাদের রয়েছে একঝাঁক মেধাবী ও অভিজ্ঞ শিক্ষক, যারা শিক্ষার্থীদের অত্যন্ত যত্ন সহকারে পাঠদান করেন।
+চমৎকার পরিবেশ: কোলাহলমুক্ত ও মনোরম প্রাকৃতিক পরিবেশে অবস্থিত বিশাল ক্যাম্পাস এবং সুপরিসর খেলার মাঠ।
+সহ-শিক্ষা কার্যক্রম: পড়াশোনার পাশাপাশি বিতর্ক প্রতিযোগিতা, খেলাধুলা, স্কাউটিং এবং সাংস্কৃতিক কর্মকাণ্ডে আমাদের শিক্ষার্থীরা নিয়মিত সাফল্য অর্জন করছে।
+ফলাফল: প্রতি বছর এসএসসি ও জেএসসি পরীক্ষায় আমাদের পাসের হার এবং জিপিএ-৫ প্রাপ্তি অত্যন্ত সন্তোষজনক।
+ঐতিহ্যবাহী এই বিদ্যাপীঠটি তার গৌরবের ইতিহাস সমুন্নত রেখে আগামীর পথে এগিয়ে যেতে প্রতিশ্রুতিবদ্ধ।
+</p>
+                <div class="about-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🏫</div>
+                        <div>
+                            <h4>আধুনিক অবকাঠামো</h4>
+                            <p>স্মার্ট ক্লাসরুম, বিজ্ঞানাগার, কম্পিউটার ল্যাব</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📚</div>
+                        <div>
+                            <h4>মানসম্পন্ন শিক্ষা</h4>
+                            <p>জাতীয় পাঠ্যক্রম অনুযায়ী সুশৃঙ্খল পাঠদান</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎭</div>
+                        <div>
+                            <h4>সহশিক্ষা কার্যক্রম</h4>
+                            <p>খেলাধুলা, সাংস্কৃতিক কার্যক্রম ও বিতর্ক</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔬</div>
+                        <div>
+                            <h4>গবেষণামূলক পাঠ</h4>
+                            <p>হাতে-কলমে বিজ্ঞান ও প্রযুক্তি শিক্ষা</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="#contact" class="btn btn-primary">আরও জানুন</a>
+            </div>
         </div>
-        <div class="grid-3">
-          <div class="card-box">
-            <h4>🎓 Qualified Teachers</h4>
-            <p>Experienced and dedicated teachers for strong academic guidance.</p>
-          </div>
-          <div class="card-box">
-            <h4>📚 Academic Excellence</h4>
-            <p>Regular tests, model exams, and supportive learning resources.</p>
-          </div>
-          <div class="card-box">
-            <h4>🏆 Activities &amp; Awards</h4>
-            <p>Sports, science fair, debates, and cultural programs.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Quick Stats -->
-    <section class="home-section">
-      <div class="container">
-        <div class="section-head">
-          <h3>School at a Glance</h3>
-          <p>Quick information about our institution.</p>
+<!-- ACADEMICS SECTION -->
+<section class="academics-section" id="academics">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">একাডেমিক</span>
+            <h2>পাঠ্যক্রম ও শিক্ষাক্রম</h2>
+            <p>জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক বোর্ড অনুমোদিত পাঠ্যক্রম</p>
         </div>
-        <div class="stats">
-          <div class="stat">
-            <span class="stat-num">1200+</span>
-            <span class="stat-label">Students</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num">35+</span>
-            <span class="stat-label">Teachers</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num">98%</span>
-            <span class="stat-label">SSC Pass Rate</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num">1949</span>
-            <span class="stat-label">Established</span>
-          </div>
+        <div class="class-cards">
+            <!-- <div class="class-card">
+                <div class="class-icon">🌱</div>
+                <h3>প্রাথমিক স্তর</h3>
+                <p>শ্রেণী ১ম - ৫ম</p>
+                <ul>
+                    <li>বাংলা ও ইংরেজি</li>
+                    <li>গণিত ও বিজ্ঞান</li>
+                    <li>সমাজ ও পরিবেশ</li>
+                    <li>চিত্রকলা ও সংগীত</li>
+                </ul>
+            </div> -->
+            <div class="class-card featured">
+                <div class="class-badge">জনপ্রিয়</div>
+                <div class="class-icon">📗</div>
+                <h3>মাধ্যমিক স্তর</h3>
+                <p>শ্রেণী ৬ষ্ঠ - ৮ম</p>
+                <ul>
+                    <li>বিজ্ঞান ও গণিত</li>
+                    <li>বাংলা সাহিত্য</li>
+                    <li>ইংরেজি ভাষা</li>
+                    <li>তথ্যপ্রযুক্তি</li>
+                </ul>
+            </div>
+            <div class="class-card">
+                <div class="class-icon">🎓</div>
+                <h3>উচ্চ মাধ্যমিক</h3>
+                <p>শ্রেণী ৯ম - ১০ম (SSC)</p>
+                <ul>
+                    <li>বিজ্ঞান বিভাগ</li>
+                    <li>মানবিক বিভাগ</li>
+                    <li>ব্যবসায় শিক্ষা</li>
+                    <li>ক্যারিয়ার গাইডেন্স</li>
+                </ul>
+            </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Headmaster Message -->
-    <section class="home-section alt">
-      <div class="container">
-        <div class="section-head">
-          <h3>Headmaster's Message</h3>
-          <p>A short message from the school leadership.</p>
+<!-- TEACHERS SECTION -->
+<section class="teachers-section" id="teachers">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">শিক্ষকমণ্ডলী</span>
+            <h2>আমাদের অভিজ্ঞ শিক্ষকবৃন্দ</h2>
         </div>
-        <div class="panel">
-          <p class="quote">
-            "Our aim is to build responsible, skilled, and morally strong students who can contribute positively to society."
-          </p>
-          <div class="quote-foot">
-            <b>Headmaster</b> — Pairahat Secondary School
-          </div>
-          <a class="link-btn" href="headmaster.html">Full Message →</a>
+        <div class="teachers-grid" id="teachersGrid">
+            <!-- Teachers rendered by JS -->
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Gallery Preview -->
-    <section class="home-section">
-      <div class="container">
-        <div class="section-head">
-          <h3>Gallery Preview</h3>
-          <p>Some moments from our school activities.</p>
+<!-- RESULTS SECTION -->
+<section class="results-section" id="results">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">ফলাফল</span>
+            <h2>পরীক্ষার ফলাফল</h2>
         </div>
-        <div class="gallery-preview">
-          <div class="ph">Photo 1</div>
-          <div class="ph">Photo 2</div>
-          <div class="ph">Photo 3</div>
-          <div class="ph">Photo 4</div>
+        <div class="result-tabs">
+            <button class="tab-btn active" onclick="showResult('ssc')">SSC ২০২৪</button>
+            <button class="tab-btn" onclick="showResult('jsc')">JSC ২০২৪</button>
+            <button class="tab-btn" onclick="showResult('annual')">বার্ষিক ২০২৪</button>
         </div>
-        <div class="center">
-          <a class="primary-btn" href="gallery.html">View Full Gallery</a>
+        <div class="result-content" id="resultContent">
+            <!-- Results rendered by JS -->
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Footer -->
-    <footer>
+<!-- GALLERY SECTION -->
+<section class="gallery-section" id="gallery">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">ছবি সংগ্রহ</span>
+            <h2>গ্যালারি</h2>
+        </div>
+        <div class="gallery-filter">
+            <button class="filter-btn active" onclick="filterGallery('all')">সব</button>
+            <button class="filter-btn" onclick="filterGallery('event')">অনুষ্ঠান</button>
+            <button class="filter-btn" onclick="filterGallery('sports')">খেলাধুলা</button>
+            <button class="filter-btn" onclick="filterGallery('academic')">একাডেমিক</button>
+        </div>
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Gallery rendered by JS -->
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="contact-section" id="contact">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">যোগাযোগ</span>
+            <h2>আমাদের সাথে যোগাযোগ করুন</h2>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div>
+                        <h4>ঠিকানা</h4>
+                        <p>পায়রাহাট, অভয়নগর, যশোর</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📞</div>
+                    <div>
+                        <h4>ফোন</h4>
+                        <p>+8801754678501</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">✉</div>
+                    <div>
+                        <h4>ইমেইল</h4>
+                        <p>gmrashidulislam003@gmail.com</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">⏰</div>
+                    <div>
+                        <h4>অফিস সময়</h4>
+                        <p>সকাল ৮টা - বিকাল ৪টা<br>শনি - বৃহস্পতিবার</p>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form" onsubmit="submitContact(event)">
+                <h3>বার্তা পাঠান</h3>
+                <div class="form-group">
+                    <input type="text" placeholder="আপনার নাম *" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="ইমেইল ঠিকানা *" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="ফোন নম্বর">
+                </div>
+                <div class="form-group">
+                    <select>
+                        <option value="">বিষয় নির্বাচন করুন</option>
+                        <option>ভর্তি সংক্রান্ত</option>
+                        <option>একাডেমিক তথ্য</option>
+                        <option>অভিযোগ/পরামর্শ</option>
+                        <option>অন্যান্য</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="আপনার বার্তা লিখুন..." rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">বার্তা পাঠান ✉</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-main">
         <div class="container">
-            <p>© 2026 <strong>Pairahat Secondary School</strong> | All Rights Reserved | Powered By: <strong>G. M. Rashidul Islam Rahat</strong></p>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>পায়রাহাট মাধ্যমিক বিদ্যালয়</h3>
+                    <p>জ্ঞান, মূল্যবোধ ও সেবার মাধ্যমে আলোকিত মানুষ গড়ার প্রত্যয়ে আমরা অঙ্গীকারবদ্ধ।</p>
+                    <div class="social-links">
+                        <a href="#">ফেসবুক</a>
+                        <a href="#">ইউটিউব</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>দ্রুত লিংক</h4>
+                    <ul>
+                        <li><a href="#home">হোম</a></li>
+                        <li><a href="#about">আমাদের সম্পর্কে</a></li>
+                        <li><a href="#academics">একাডেমিক</a></li>
+                        <li><a href="#notice">নোটিশ বোর্ড</a></li>
+                        <li><a href="#gallery">গ্যালারি</a></li>
+                        <li><a href="#contact">যোগাযোগ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>একাডেমিক</h4>
+                    <ul>
+                        <li><a href="#academics">পাঠ্যক্রম</a></li>
+                        <li><a href="#teachers">শিক্ষকমণ্ডলী</a></li>
+                        <li><a href="#results">পরীক্ষার ফলাফল</a></li>
+                        <li><a href="#routine">ক্লাস রুটিন</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>যোগাযোগ</h4>
+                    <p>পায়রাহাট, অভয়নগর, যশোর</p>
+                    <p>📞 +8801754678501</p>
+                    <p>✉ gmrashidulislam003@gmail.com</p>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p>© ২০২৫ পায়রাহাট মাধ্যমিক বিদ্যালয়। সর্বস্বত্ব সংরক্ষিত।</p>
+        </div>
+    </div>
+</footer>
 
-    <script>
-      const hamburger = document.getElementById('hamburger');
-      const mobileMenu = document.getElementById('mobileMenu');
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content">
+        <img id="lightboxImg" src="" alt="">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    </div>
+</div>
 
-      hamburger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        hamburger.classList.toggle('open');
-        mobileMenu.classList.toggle('open');
-      });
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</button>
 
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('#mainNav')) {
-          hamburger.classList.remove('open');
-          mobileMenu.classList.remove('open');
-        }
-      });
-
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          hamburger.classList.remove('open');
-          mobileMenu.classList.remove('open');
-        }
-      });
-    </script>
-
+<script src="app.js"></script>
 </body>
 </html>
